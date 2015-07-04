@@ -3,7 +3,7 @@ var irc      = require("irc");
 var Class    = require("class.extend");
 var jsonfile = require("jsonfile");
 
-exports.Acrobot = Class.extend({
+exports.Server = Class.extend({
   init: function(filename) {
 
     // these are defaults ONLY! they will be overwritten by config.json
@@ -20,7 +20,22 @@ exports.Acrobot = Class.extend({
       }
     };
 
+    // config filename
     this.filename = filename || "config.json";
+
+    // IRC server
+    this.bot = new irc.Client(this.irc.server, this.irc.nick, {
+      channels: this.irc.channels,
+
+      userName: this.irc.nick,
+      realName: "Acrobot",
+      autoRejoin: true,
+      autoConnect: false,
+      floodProtection: true,
+      floodProtectionDelay: 25,
+    });
+
+    this.bind_irc_events();
 
   },
 
@@ -62,6 +77,18 @@ exports.Acrobot = Class.extend({
       if(callback) callback(obj);
       
     });
+  },
+
+  // IRC connection
+
+  connect: function(callback) {
+    this.bot.connect(5, function() {
+      if(callback) callback();
+    });
+  },
+
+  bind_irc_events: function() {
+    
   }
   
 });
