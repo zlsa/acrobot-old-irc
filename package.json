@@ -1,0 +1,19 @@
+{
+  "name":    "acrobot",
+  "version": "0.1.0",
+  "description": "IRC acronym/factoid bot",
+  "license": "MIT",
+  "private": true,
+  "author":  {
+    "name": "Jon Ross",
+    "email": "jonross.zlsa+acrobot@gmail.com",
+    "url": "http://zlsa.github.io/"
+  },
+
+  "dependencies": {
+    "irc":            "^0.3.12",
+    "jsonfile":       "^2.2.1",
+    "class.extend":   "^0.9.1"
+  }
+  
+}
