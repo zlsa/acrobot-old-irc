@@ -16,9 +16,6 @@
     },
     "EchoLogic": {
       "admin": true
-    },
-    "lsa": {
-      "ignored": true
     }
   },
   "mode": {

@@ -376,7 +376,7 @@ exports.Server = Class.extend({
     var args = message.substr(type.length + 1);
 
     if(type == "list") {
-      this.command_list_admin(sender, all, args);
+      this.command_list_admins(sender, all, args);
     } else if(type == "add") {
       this.command_add_admin(sender, all, args);
     } else if(type == "remove") {
@@ -559,7 +559,7 @@ exports.Server = Class.extend({
       return;
     }
     
-    this.direct(sender, all, "joined " + channel);
+    this.all(all, "joined " + channel);
   },
 
   command_remove_channel: function(sender, all, channel) {
@@ -569,8 +569,8 @@ exports.Server = Class.extend({
     }
     
     if(!channel) {
-      if(sender[0] == "#") {
-        channel = sender;
+      if(all[0] == "#") {
+        channel = all;
       } else {
         this.direct(sender, all, "cannot part from private chat");
         return;
@@ -758,6 +758,12 @@ exports.Server = Class.extend({
       this.command_add_channel(sender, all, message);
     } else if(command == "part") {
       this.command_remove_channel(sender, all, message);
+      
+    } else if(command == "silence") {
+      this.command_mode(sender, all, "silent on");
+      
+    } else if(command == "unsilence") {
+      this.command_mode(sender, all, "silent off");
       
     } else if(command == "mode") {
       this.command_mode(sender, all, message);
