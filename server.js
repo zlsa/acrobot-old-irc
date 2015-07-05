@@ -2,13 +2,15 @@
 var irc      = require("irc");
 var Class    = require("class.extend");
 var jsonfile = require("jsonfile");
+var nlp      = require("./nlp");
+var acrs     = require("./acronyms");
 
 exports.Server = Class.extend({
   init: function(acronyms) {
 
     // these are defaults ONLY! they will be overwritten by config.json
     this.irc = {
-      nick:      "acrobot",
+      nick:      "acrobotic",
       server:    "irc.esper.net",
       channels: ["#acrobot"],
     };
@@ -32,10 +34,7 @@ exports.Server = Class.extend({
 
       userName: this.irc.nick,
       realName: "Acrobot",
-      autoRejoin: true,
       autoConnect: false,
-      floodProtection: true,
-      floodProtectionDelay: 25,
     });
 
     this.bind_irc_events();
@@ -110,11 +109,47 @@ exports.Server = Class.extend({
   },
 
   parse_message: function(from, to, message) {
-    if(from == this.irc.nick) return;
-    
-    console.log(from + " => " + to + ": '" + message + "'");
 
-    this.notice(from, "you said '" + message + "'");
+    var server = this;
+    
+    var reply_to = function(message) {
+      server.notice(to, message);
+    };
+    
+    if(from == this.irc.nick) return;
+
+    var cfn = nlp.classify(message);
+
+    reply_to(JSON.stringify(cfn));
+
+    if(cfn.action == "what" && cfn.subjects) {
+
+      var got_acronyms = []; // avoid printing out duplicates
+
+      for(var i=0; i<cfn.subjects.length; i++) {
+
+        var acronym = acrs.clean(cfn.subjects[i]);
+
+        if(got_acronyms.indexOf(acronym) >= 0) continue;
+        got_acronyms.push(acronym);
+        
+        this.acronyms.get(acronym, function(err, matches) {
+          
+          if(matches.length >= 1) {
+            var reply = [];
+            for(var i=0; i<matches.length; i++) {
+              var a = matches[i];
+              reply.push(a.get_acronym() + ": " + a.get_initials());
+            }
+            reply_to(reply.join(", "));
+          }
+          
+        });
+        
+      }
+      
+    }
+    
   }
   
 });
