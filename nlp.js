@@ -23,7 +23,12 @@ exports.andify = function(list) {
 };
 
 exports.split_acronyms = function(text) {
-  return text.split(/\s+|and/g);
+  var acronyms = text.split(/\s+|and/g);
+  var a = [];
+  for(var i=0; i<acronyms.length; i++) {
+    if(acronyms[i]) a.push(acronyms[i]);
+  }
+  return a;
 };
 
 exports.preprocess = function(text) {

@@ -260,7 +260,7 @@ exports.Server = Class.extend({
     return users;
   },
 
-  print_acronyms: function(acronyms, to, description) {
+  print_acronyms: function(acronyms, to, description, always) {
     if(description == undefined) description = true;
     
     var server = this;
@@ -287,6 +287,8 @@ exports.Server = Class.extend({
           }
           
           server.say(to, reply.join(", "));
+        } else if(always) {
+          server.say(to, "could not find an acronym matching '" + acronym + "'");
         }
         
       });
@@ -659,9 +661,9 @@ exports.Server = Class.extend({
       return;
     }
     
-    var acronyms = message.toLowerCase().split(/\s+/);
+    var acronyms = nlp.split_acronyms(message.toLowerCase());
 
-    this.print_acronyms(acronyms, to);
+    this.print_acronyms(acronyms, to, true, true);
 
   },
 
