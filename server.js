@@ -719,6 +719,24 @@ exports.Server = Class.extend({
 
   },
 
+  command_say: function(sender, all, message) {
+    if(!this.user_is(sender, "admin")) {
+      this.direct(sender, all, "you're not an admin!");
+      return;
+    }
+    
+    if(!message) {
+      this.direct(sender, all, "expected channel and message");
+      return;
+    }
+    
+    var channel = message.split(" ")[0].toLowerCase();
+    var msg = message.substr(channel.length + 1);
+
+    this.say(channel, msg);
+
+  },
+
   command: function(sender, all, command, message) {
     
     if(command == "quit" || command == "disconnect" || command == "leave") {
@@ -764,6 +782,9 @@ exports.Server = Class.extend({
       
     } else if(command == "unsilence") {
       this.command_mode(sender, all, "silent off");
+      
+    } else if(command == "say") {
+      this.command_say(sender, all, message);
       
     } else if(command == "mode") {
       this.command_mode(sender, all, message);
