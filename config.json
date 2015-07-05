@@ -17,7 +17,8 @@
   },
   "mode": {
     "debug": true,
-    "cheeky": true,
-    "silent": false
+    "cheeky": false,
+    "silent": false,
+    "auto_refresh": true
   }
 }

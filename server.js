@@ -39,7 +39,8 @@ exports.Server = Class.extend({
     this.mode = {
       debug: true,
       cheeky: false,
-      silent: false
+      silent: false,
+      auto_refresh: false
     };
 
     this.mode_cooldown = {};
@@ -190,7 +191,8 @@ exports.Server = Class.extend({
     var valid_modes = [
       "debug",
       "cheeky",
-      "silent"
+      "silent",
+      "auto_refresh"
     ];
     
     if(valid_modes.indexOf(mode) >= 0) return true;
@@ -273,8 +275,14 @@ exports.Server = Class.extend({
 
       if(got_acronyms.indexOf(acronym) >= 0) continue;
       got_acronyms.push(acronym);
+
+      var get = this.acronyms.get;
       
-      this.acronyms.get(acronym, function(err, matches) {
+      if(this.mode_is("auto_refresh")) {
+        get = this.acronyms.get_refresh;
+      }
+    
+      get.call(this.acronyms, acronym, function(err, matches) {
         
         if(matches.length >= 1) {
           var reply = [];

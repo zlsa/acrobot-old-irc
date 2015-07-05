@@ -182,6 +182,17 @@ exports.JSONAcronyms = exports.Acronyms.extend({
     this.filename = filename;
   },
 
+  get_refresh: function(acronym, callback) {
+    var acronyms = this;
+
+    this.restore(function() {
+      acronyms.get.call(acronyms, acronym, function(err, matches) {
+        if(callback) callback(err, matches);
+      });
+    });
+
+  },
+
   save: function(callback) {
 
     var acronyms = this;
@@ -221,6 +232,8 @@ exports.JSONAcronyms = exports.Acronyms.extend({
         console.log(err);
         return;
       }
+
+      acronyms.acronyms = [];
 
       for(var i=0; i<obj.length; i++) {
         acronyms.acronyms.push(new exports.Acronym(obj[i]));
