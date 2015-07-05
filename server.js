@@ -10,8 +10,8 @@ var phrases  = require("./phrases");
 exports.CONFIG_VERSION = 1;
 
 exports.is_valid_nick = function(nick) {
-  // TODO FIXME
-  return true;
+  var valid = new RegExp(/^[A-Za-z0-9_\-]+$/).test(nick);
+  return valid;
 };
 
 exports.Server = Class.extend({
@@ -147,6 +147,22 @@ exports.Server = Class.extend({
 
   // mode
 
+  is_valid_mode: function(mode) {
+    var valid_modes = [
+      "debug",
+      "cheeky"
+    ];
+    
+    if(valid_modes.indexOf(mode) >= 0) return true;
+    return false;
+  },
+
+  set_mode: function(mode, value) {
+    this.mode[mode] = value;
+
+    this.save();
+  },
+
   enabled: function(mode) {
     if(this.mode[mode]) return true;
     return false;
@@ -248,41 +264,128 @@ exports.Server = Class.extend({
       this.notice(from, "you're not an admin!");
   },
 
+  command_restart: function(from, to, message) {
+    if(this.user_is(from, "admin"))
+      process.exit();
+    else
+      this.notice(from, "you're not an admin!");
+  },
+
+  // USER FUNCTIONS (ADMIN)
+
   command_add_admin: function(from, to, nick) {
+    if(!this.user_is(from, "admin")) {
+      this.notice(from, "you're not an admin!");
+      return;
+    }
+    
     if(!nick) {
       this.notice(from, "expected a nick to add as admin");
       return;
     }
+    
     if(!exports.is_valid_nick(nick)) {
       this.notice(from, "invalid nick '" + nick + "'");
       return;
     }
-    
-    if(this.user_is(from, "admin")) {
-      this.user_set(nick, "admin", true);
-      this.notice(from, "'" + nick + "' is now an admin");
-    } else {
-      this.notice(from, "you're not an admin!");
+
+    if(this.user_is(nick, "admin")) {
+      this.notice(from, "'" + nick + "' is already an admin");
+      return;
     }
+    
+    this.user_set(nick, "admin", true);
+    this.notice(from, "'" + nick + "' is now an admin");
+    this.notice(nick, "'" + from + "' has made you an admin");
   },
 
   command_remove_admin: function(from, to, nick) {
+    if(!this.user_is(from, "admin")) {
+      this.notice(from, "you're not an admin!");
+      return;
+    }
+    
     if(!nick) {
       this.notice(from, "expected a nick to remove as admin");
       return;
     }
+    
     if(!exports.is_valid_nick(nick)) {
       this.notice(from, "invalid nick '" + nick + "'");
       return;
     }
+
+    if(nick == from) {
+      this.notice(from, "you can't remove yourself as an admin");
+      return;
+    }
     
-    if(this.user_is(from, "admin")) {
-      this.user_set(nick, "admin", true);
-      this.notice(from, "'" + nick + "' is no longer an admin");
-    } else {
+    if(!this.user_is(nick, "admin")) {
+      this.notice(from, "'" + nick + "' already isn't an admin");
+      return;
+    }
+
+    this.user_set(nick, "admin", false);
+    this.notice(from, "'" + nick + "' is no longer an admin");
+    this.notice(nick, "'" + from + "' has removed you as an admin");
+  },
+
+  // USER FUNCTIONS (ADMIN)
+
+  command_add_ignore: function(from, to, nick) {
+    if(!this.user_is(from, "admin")) {
       this.notice(from, "you're not an admin!");
     }
+    
+    if(!nick) {
+      this.notice(from, "expected a nick to add to ignore list");
+      return;
+    }
+    
+    if(!exports.is_valid_nick(nick)) {
+      this.notice(from, "invalid nick '" + nick + "'");
+      return;
+    }
+
+    if(nick == from) {
+      this.notice(from, "you can't ignore yourself");
+      return;
+    }
+    
+    if(this.user_is(nick, "ignored")) {
+      this.notice(from, "'" + nick + "' is already ignored");
+      return;
+    }
+    
+    this.user_set(nick, "ignored", true);
+    this.notice(from, "'" + nick + "' is now ignored");
   },
+
+  command_remove_ignore: function(from, to, nick) {
+    if(!this.user_is(from, "admin")) {
+      this.notice(from, "you're not an admin!");
+    }
+    
+    if(!nick) {
+      this.notice(from, "expected a nick to remove from ignore list");
+      return;
+    }
+    
+    if(!exports.is_valid_nick(nick)) {
+      this.notice(from, "invalid nick '" + nick + "'");
+      return;
+    }
+
+    if(!this.user_is(nick, "ignore")) {
+      this.notice(from, "'" + nick + "' already isn't ignored");
+      return;
+    }
+
+    this.user_set(nick, "ignored", false);
+    this.notice(from, "'" + nick + "' is no longer ignored");
+  },
+
+  // ADD FUNCTION
 
   command_add: function(from, to, message) {
     if(!message) {
@@ -295,6 +398,10 @@ exports.Server = Class.extend({
 
     if(type == "admin") {
       this.command_add_admin(from, to, args);
+    } else if(type == "ignore") {
+      this.command_add_ignore(from, to, args);
+    } else {
+      this.notice(from, "expected one of [admin, ignore]");
     }
 
   },
@@ -310,17 +417,69 @@ exports.Server = Class.extend({
 
     if(type == "admin") {
       this.command_remove_admin(from, to, args);
+    } else if(type == "ignore") {
+      this.command_remove_ignore(from, to, args);
+    } else {
+      this.notice(from, "expected one of [admin, ignore]");
+    }
+
+  },
+
+  command_mode: function(from, to, message) {
+    if(!message) {
+      this.notice(from, "expected two arguments to 'mode'");
+      return;
+    }
+    
+    var args = message.toLowerCase().split(/\s+/);
+
+    if(args.length != 1 && args.length != 2) {
+      this.notice(from, "expected one or two arguments to 'mode'");
+      return;
+    }
+
+    var value = true;
+
+    if(args.length == 2) {
+      if(args[1] == "true"    ||
+         args[1] == "on"      ||
+         args[1] == "enabled") {
+        value = true;
+      } else if(args[1] == "false"    ||
+                args[1] == "off"      ||
+                args[1] == "disabled") {
+        value = false;
+      } else {
+        this.notice(from, "expected second argument to be 'true' or 'false'");
+        return;
+      }
+    }
+
+    var mode = args[0];
+
+    if(this.is_valid_mode(mode)) {
+      this.set_mode(mode, value);
+      this.notice(from, "'" + mode + "' has been set to " + this.enabled(mode));
+    } else {
+      this.notice(from, "invalid mode '" + mode + "'");
+      return;
     }
 
   },
 
   command: function(from, to, command, message) {
-    if(command == "quit" || command == "disconnect") {
+    if(command == "quit" || command == "disconnect" || command == "leave") {
       this.command_quit(from, to, message);
+    } else if(command == "restart") {
+      this.command_restart(from, to, message);
+      
     } else if(command == "add") {
       this.command_add(from, to, message);
     } else if(command == "remove") {
       this.command_remove(from, to, message);
+      
+    } else if(command == "mode") {
+      this.command_mode(from, to, message);
     } else {
       this.notice(from, "unknown command");
     }
@@ -374,4 +533,3 @@ exports.Server = Class.extend({
   }
   
 });
-
