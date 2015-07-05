@@ -1,6 +1,5 @@
 [
   {
-    "id": 0,
     "acronyms": [
       "fts"
     ],
@@ -10,7 +9,6 @@
     "weight": 0
   },
   {
-    "id": 1,
     "acronyms": [
       "ksp"
     ],
@@ -20,13 +18,21 @@
     "weight": 0
   },
   {
-    "id": 2,
     "acronyms": [
       "los"
     ],
     "acronym": "los",
     "initials": "Loss of Signal",
     "description": "Used to signify that an antenna has lost the radio signal from the vehicle. This occurs when the vehicle travels below the horizon.",
+    "weight": 0
+  },
+  {
+    "acronyms": [
+      "copv"
+    ],
+    "acronym": "copv",
+    "initials": "Composite Overwrapped Pressure Vessel",
+    "description": "A pressure tank constructed from a thin, non-structural liner wrapped with structural fiber composite.",
     "weight": 0
   }
 ]

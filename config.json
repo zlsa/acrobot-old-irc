@@ -10,7 +10,7 @@
   "users": {
     "zlsa": {
       "admin": true
-    }
+    },
   },
   "mode": {
     "debug": true,

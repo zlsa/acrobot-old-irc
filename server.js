@@ -9,6 +9,11 @@ var phrases  = require("./phrases");
 
 exports.CONFIG_VERSION = 1;
 
+exports.is_valid_nick = function(nick) {
+  // TODO FIXME
+  return true;
+};
+
 exports.Server = Class.extend({
   init: function(acronyms, filename) {
 
@@ -178,6 +183,16 @@ exports.Server = Class.extend({
     }
   },
 
+  user_set: function(nick, status, value) {
+    if(!(nick in this.users)) {
+      this.users[nick] = {};
+    }
+
+    this.users[nick][status] = value;
+
+    this.save();
+  },
+
   // parsing
 
   parse_what: function(cfn, to) {
@@ -233,9 +248,79 @@ exports.Server = Class.extend({
       this.notice(from, "you're not an admin!");
   },
 
+  command_add_admin: function(from, to, nick) {
+    if(!nick) {
+      this.notice(from, "expected a nick to add as admin");
+      return;
+    }
+    if(!exports.is_valid_nick(nick)) {
+      this.notice(from, "invalid nick '" + nick + "'");
+      return;
+    }
+    
+    if(this.user_is(from, "admin")) {
+      this.user_set(nick, "admin", true);
+      this.notice(from, "'" + nick + "' is now an admin");
+    } else {
+      this.notice(from, "you're not an admin!");
+    }
+  },
+
+  command_remove_admin: function(from, to, nick) {
+    if(!nick) {
+      this.notice(from, "expected a nick to remove as admin");
+      return;
+    }
+    if(!exports.is_valid_nick(nick)) {
+      this.notice(from, "invalid nick '" + nick + "'");
+      return;
+    }
+    
+    if(this.user_is(from, "admin")) {
+      this.user_set(nick, "admin", true);
+      this.notice(from, "'" + nick + "' is no longer an admin");
+    } else {
+      this.notice(from, "you're not an admin!");
+    }
+  },
+
+  command_add: function(from, to, message) {
+    if(!message) {
+      this.notice(from, "expected additional arguments to 'add'");
+      return;
+    }
+    
+    var type = message.split(" ")[0].toLowerCase();
+    var args = message.substr(type.length + 1);
+
+    if(type == "admin") {
+      this.command_add_admin(from, to, args);
+    }
+
+  },
+
+  command_remove: function(from, to, message) {
+    if(!message) {
+      this.notice(from, "expected additional arguments to 'remove'");
+      return;
+    }
+    
+    var type = message.split(" ")[0].toLowerCase();
+    var args = message.substr(type.length + 1);
+
+    if(type == "admin") {
+      this.command_remove_admin(from, to, args);
+    }
+
+  },
+
   command: function(from, to, command, message) {
     if(command == "quit" || command == "disconnect") {
       this.command_quit(from, to, message);
+    } else if(command == "add") {
+      this.command_add(from, to, message);
+    } else if(command == "remove") {
+      this.command_remove(from, to, message);
     } else {
       this.notice(from, "unknown command");
     }
@@ -250,17 +335,20 @@ exports.Server = Class.extend({
 
     var command = message.split(" ")[0].toLowerCase();
 
-    this.command(from, to, "quit", message.substr(command.length + 1));
+    this.command(from, to, command, message.substr(command.length + 1));
 
   },
   
   parse_message: function(from, to, message) {
 
-    message = message.trim();
-
     var server = this;
     
     if(from == this.irc.nick) return;
+
+    if(this.user_is(from, "ignored"))
+      return;
+    
+    message = message.trim();
 
     var type = "natural";
 
