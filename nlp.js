@@ -19,7 +19,7 @@ exports.preprocess = function(text) {
 exports.classify = function(text) {
   words = exports.preprocess(text);
 
-  if(words.length >= 2) {
+  if(words.length >= 1) {
 
     if(words[0] == "what") {
       var cfn = {};
@@ -27,10 +27,16 @@ exports.classify = function(text) {
       
       var offset = 1;
       
-      if((words[1] == "is" || words[1] == "are") && words.length >= 3) offset += 1;
-      if(offset == 2 && words[2] == "the" && words.length >= 4) offset += 1;
+      if((words[1] == "is" || words[1] == "are") && words.length >= 2) offset += 1;
+      if(offset == 2 && words[2] == "the" && words.length >= 3) offset += 1;
 
-      cfn.subjects = words.slice(offset).join(" ").split(/\s+|and/g);
+      var subjects = words.slice(offset).join(" ").split(/\s+|and/g);
+
+      cfn.subjects = [];
+      
+      for(var i=0; i<subjects.length; i++) {
+        if(subjects[i]) cfn.subjects.push(subjects[i]);
+      }
       
       return cfn;
     }

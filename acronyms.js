@@ -16,7 +16,7 @@ exports.acronym_compare = function(a, b) {
 
 // a single acronym
 exports.Acronym = Class.extend({
-  init: function() {
+  init: function(packed) {
 
     this.id          = "";
 
@@ -37,6 +37,32 @@ exports.Acronym = Class.extend({
 
     this.last_update = 0;
     this.updated_by  = null;
+
+    if(packed) this.unpack(packed);
+    
+  },
+
+  pack: function() {
+    var o = {};
+    
+    o.id          = this.id;
+    o.acronym     = this.acronym;
+    o.acronyms    = this.acronyms;
+    o.initials    = this.initials;
+    o.description = this.description;
+    o.weight      = this.weight;
+    
+    return o;
+  },
+
+  unpack: function(o) {
+    
+    this.id          = o.id;
+    this.acronym     = o.acronym;
+    this.acronyms    = o.acronyms;
+    this.initials    = o.initials;
+    this.description = o.description;
+    this.weight      = o.weight;
     
   },
 
@@ -149,15 +175,19 @@ exports.JSONAcronyms = exports.Acronyms.extend({
 
     // acronym filename
     this.filename = filename;
-
-    this.save();
   },
 
   save: function(callback) {
 
     var acronyms = this;
+
+    var list = [];
     
-    jsonfile.writeFile(this.filename, this.acronyms, {
+    for(var i=0; i<this.acronyms.length; i++) {
+      list.push(this.acronyms[i].pack());
+    }
+    
+    jsonfile.writeFile(this.filename, list, {
       spaces: 2
     }, function(err, obj) {
       if(err) {
@@ -175,7 +205,7 @@ exports.JSONAcronyms = exports.Acronyms.extend({
     });
   },
 
-  restore: function() {
+  restore: function(callback) {
 
     var acronyms = this;
 
@@ -186,7 +216,9 @@ exports.JSONAcronyms = exports.Acronyms.extend({
         return;
       }
 
-      acronyms.acronyms = obj;
+      for(var i=0; i<obj.length; i++) {
+        acronyms.acronyms.push(new exports.Acronym(obj[i]));
+      }
       
       console.log("restored acronyms from '" + acronyms.filename + "'");
       
