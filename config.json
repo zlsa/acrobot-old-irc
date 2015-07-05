@@ -22,6 +22,7 @@
     "debug": true,
     "cheeky": false,
     "silent": false,
-    "auto_refresh": true
+    "auto_refresh": true,
+    "natural": true
   }
 }

@@ -40,7 +40,8 @@ exports.Server = Class.extend({
       debug: true,
       cheeky: false,
       silent: false,
-      auto_refresh: false
+      auto_refresh: false,
+      natural: true
     };
 
     this.mode_cooldown = {};
@@ -203,6 +204,7 @@ exports.Server = Class.extend({
       "debug",
       "cheeky",
       "silent",
+      "natural",
       "auto_refresh"
     ];
     
@@ -788,6 +790,7 @@ exports.Server = Class.extend({
       
     } else if(command == "mode") {
       this.command_mode(sender, all, message);
+      
     } else {
       this.notice(sender, "unknown command '" + command + "'");
     }
@@ -838,7 +841,7 @@ exports.Server = Class.extend({
     }
 
     if(type == "natural") {
-      if(this.mode_is("silent"))
+      if(this.mode_is("silent") || !this.mode_is("natural"))
         return;
       this.parse_natural(sender, all, message);
     }
