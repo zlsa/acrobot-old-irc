@@ -1,21 +1,365 @@
 [
   {
     "acronyms": [
-      "fts"
+      "aos"
     ],
-    "acronym": "fts",
-    "initials": "Flight Termination System",
-    "description": "When a launch vehicle departs from its planned trajectory, the flight termination system is used to destroy the rocket to prevent damage to people or assets.",
-    "weight": 0
+    "acronym": "aos",
+    "initials": "Acquisition of Signal",
+    "description": "A phrase used during launch when communication with the vehicle is re-established after Loss of Signal or when the vehicle rises above the horizon",
+    "weight": 0.4,
+    "source": "/r/spacex wiki"
   },
   {
     "acronyms": [
-      "ksp"
+      "acs"
     ],
-    "acronym": "ksp",
-    "initials": "Kerbal Space Program",
-    "description": "A very popular space sandbox simulation game.",
-    "weight": 0
+    "acronym": "acs",
+    "initials": "Attitude Control System",
+    "description": "Synonymous with Reaction Control System",
+    "weight": 0.6,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "asds"
+    ],
+    "acronym": "asds",
+    "initials": "Autonomous Spaceport Drone Ship",
+    "description": "SpaceX's custom-built landing barge, used to test the Falcon 9's propulsive landing capability",
+    "weight": 0.8,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "beam"
+    ],
+    "acronym": "beam",
+    "initials": "Bigelow Expandable Activities Module",
+    "description": "An inflatable module designed by Bigelow Aerospace that is scheduled to be brought up to the iss aboard crs-8",
+    "weight": 0.6,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "bfr"
+    ],
+    "acronym": "bfr",
+    "initials": "Big Falcon Rocket",
+    "description": "A generic term for the next SpaceX rocket, which will be larger than Falcon Heavy",
+    "weight": 0.8,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "bo"
+    ],
+    "acronym": "bo",
+    "initials": "Blue Origin",
+    "description": "A SpaceX competitor that is developing manned, reusable suborbital and orbital launch vehicles",
+    "weight": 0.6,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "c3"
+    ],
+    "acronym": "c3",
+    "initials": "Characteristic Energy",
+    "description": "A measure of escape velocity (< 1 = no escape, 1 = escape with no further velocity, > 1 = escape with increasing velocity)",
+    "weight": 0.2,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "cbm"
+    ],
+    "acronym": "cbm",
+    "initials": "Common Berthing Mechanism",
+    "description": "The berthing mechanism used to attach the cargo Dragon to the ISS",
+    "weight": 0.6,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "ccafs"
+    ],
+    "acronym": "ccafs",
+    "initials": "Cape Canaveral Air Force Station",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "ccdev"
+    ],
+    "acronym": "ccdev",
+    "initials": "Commercial Crew Development",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "ccicap"
+    ],
+    "acronym": "ccicap",
+    "initials": "Commercial Crew Integrated Capability",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "cctcap"
+    ],
+    "acronym": "cctcap",
+    "initials": "Commercial Crew Transportation Capability",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "cots"
+    ],
+    "acronym": "cots",
+    "initials": "Commercial Orbital Transportation Services",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "crs"
+    ],
+    "acronym": "crs",
+    "initials": "Commercial Resupply Services",
+    "description": "A contract that SpaceX and Orbital Sciences both have with NASA to supply cargo to the International Space Station with",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "deltav",
+      "dv",
+      "Δv"
+    ],
+    "acronym": "dv",
+    "initials": "Delta-V",
+    "description": "The amount of 'effort' required to move a spacecraft from one location or orbit to another",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "edl"
+    ],
+    "acronym": "edl",
+    "initials": "Entry, Descent and Landing",
+    "description": "The series of controlled maneuvers and pathways used to land an orbiting spacecraft on a planet's surface",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "frr"
+    ],
+    "acronym": "frr",
+    "initials": "Flight Readiness Review",
+    "description": "A paperwork exercise used to ensure that a rocket is ready to fly",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "fss"
+    ],
+    "acronym": "fss",
+    "initials": "Fixed Service Structure",
+    "description": "A structure on the pad at Launch Complex 39A, Cape Canaveral, used for the Space Shuttle program",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "f1"
+    ],
+    "acronym": "f1",
+    "initials": "Falcon 1",
+    "description": "SpaceX's first rocket and the first privately-developed liquid-fueled rocket to reach Earth orbit",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "f9"
+    ],
+    "acronym": "f9",
+    "initials": "Falcon 9",
+    "description": "SpaceX's second rocket and the first fully commercially developed rocket to deliver a payload to the ISS",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "fh"
+    ],
+    "acronym": "fh",
+    "initials": "Falcon Heavy",
+    "description": "A Falcon 9 rocket stack with two more Falcon 9 booster stages on the sides.",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "gse"
+    ],
+    "acronym": "gse",
+    "initials": "Ground Support Equipment",
+    "description": "Any ground-based equipment used to enable a launch to occur",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "hif"
+    ],
+    "acronym": "hif",
+    "initials": "Horizontal Integration Facility",
+    "description": "A building used to assemble a rocket while horizontal",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "iip"
+    ],
+    "acronym": "iip",
+    "initials": "Instantaneous Impact Point",
+    "description": "The point a rocket would land at if all propulsion was terminated at that moment",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "immt"
+    ],
+    "acronym": "immt",
+    "initials": "ISS Mission Management Team",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "isru"
+    ],
+    "acronym": "isru",
+    "initials": "In-situ Resource Utilization",
+    "description": "The mining and processing of the regolith/atmosphere of Mars, Moon, etc, for use as fuel, propellant, or other consumables",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "isp"
+    ],
+    "acronym": "isp",
+    "initials": "Specific Impulse",
+    "description": "A measure of the fuel efficiency of a rocket engine",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "iss"
+    ],
+    "acronym": "iss",
+    "initials": "International Space Station",
+    "description": "An internationally run habitable artificial satellite in low Earth orbit",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "jrti"
+    ],
+    "acronym": "jrti",
+    "initials": "Just Read The Instructions (Marmac 300)",
+    "description": "The name of SpaceX's now retired Atlantic ASDS; see OCISLY",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "jwst"
+    ],
+    "acronym": "jwst",
+    "initials": "James Webb Space Telescope",
+    "description": "A NASA space observatory under construction and scheduled to launch in 2018 on the Ariane 5 launch vehicle",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "ksc"
+    ],
+    "acronym": "ksc",
+    "initials": "Kennedy Space Center",
+    "description": "A NASA-run orbital launch center at Cape Canaveral, Florida",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "l1"
+    ],
+    "acronym": "l1",
+    "initials": "Lagrange Point 1",
+    "description": "usually used in reference to Earth-Sun L1, this is a region of space in which it is possible to 'hover' in between the Earth and the Sun",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "l2"
+    ],
+    "acronym": "l2",
+    "initials": "",
+    "description": "an exclusive members-only club of the NASA SpaceFlight community",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "lc-13"
+    ],
+    "acronym": "lc-13",
+    "initials": "Launch Complex 13, Cape Canaveral",
+    "description": "SpaceX's chosen landing pad for launches from SLC-40 & LC-39A",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "lc-39a"
+    ],
+    "acronym": "lc-39a",
+    "initials": "Launch Complex 39A, Cape Canaveral",
+    "description": "A former shuttle launch site now leased by SpaceX; the debut launch of the Falcon Heavy is expected to be from LC-39A",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "lom"
+    ],
+    "acronym": "lom",
+    "initials": "Loss of Mission",
+    "description": "The mission failing irrecoverably, often due to launch vehicle failure",
+    "weight": 1,
+    "source": "/r/spacex wiki"
   },
   {
     "acronyms": [
@@ -23,16 +367,769 @@
     ],
     "acronym": "los",
     "initials": "Loss of Signal",
-    "description": "Used to signify that an antenna has lost the radio signal from the vehicle. This occurs when the vehicle travels below the horizon.",
-    "weight": 0
+    "description": "A phrase used during launch when communication with the vehicle is temporarily lost, such as when the vehicle moves below the horizon",
+    "weight": 1,
+    "source": "/r/spacex wiki"
   },
   {
     "acronyms": [
-      "copv"
+      "lov"
     ],
-    "acronym": "copv",
-    "initials": "Composite Overwrapped Pressure Vessel",
-    "description": "A pressure tank constructed from a thin, non-structural liner wrapped with structural fiber composite.",
-    "weight": 0
+    "acronym": "lov",
+    "initials": "Loss of Vehicle",
+    "description": "A launch vehicle failure",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "lrr"
+    ],
+    "acronym": "lrr",
+    "initials": "Launch (vehicle) Readiness Review",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "ma"
+    ],
+    "acronym": "ma",
+    "initials": "Mission Assurance",
+    "description": "An engineering process used to increase the chance of mission success",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "mct"
+    ],
+    "acronym": "mct",
+    "initials": "Mars Colonial Transporter",
+    "description": "A vehicle planned by SpaceX to transport humans to and from Mars; see also BFR",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "meco"
+    ],
+    "acronym": "meco",
+    "initials": "Main Engine Cutoff",
+    "description": "During launch, the ending of the first stage engine burn",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "nds"
+    ],
+    "acronym": "nds",
+    "initials": "NASA Docking System",
+    "description": "A device used to attach the crew Dragon (Dragon 2) to the ISS",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "net"
+    ],
+    "acronym": "net",
+    "initials": "No Earlier Than",
+    "description": "Refers to a date that is the absolute earliest time an event could happen",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "nsf"
+    ],
+    "acronym": "nsf",
+    "initials": "NASA SpaceFlight/NASA Spaceflight Forums",
+    "url": "http://www.nasaspaceflight.com/",
+    "description": "A website that covers all space-related news; not officially affiliated with NASA",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "ocisly"
+    ],
+    "acronym": "ocisly",
+    "initials": "Of Course I Still Love You (Marmac 304)",
+    "description": "spacex's second atlantic asds barge, replacing jrti",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "pif"
+    ],
+    "acronym": "pif",
+    "initials": "Payload Integration Facility",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "pica-x"
+    ],
+    "acronym": "pica-x",
+    "initials": "Phenolic Impregnated Carbon Ablator-X",
+    "description": "The material used for the head shields of the Dragon capsules.",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "pma"
+    ],
+    "acronym": "pma",
+    "initials": "Pressurized Mating Adapter",
+    "description": "A device used on the ISS to convert a CBM port to an NDS port",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "pmf"
+    ],
+    "acronym": "pmf",
+    "initials": "Propellant Mass Fraction",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "rcs"
+    ],
+    "acronym": "rcs",
+    "initials": "Reaction Control System",
+    "description": "A system that burns fuel or ejects pressurized gas to rotate the vehicle; synonymous with Attitude Control System",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "rss"
+    ],
+    "acronym": "rss",
+    "initials": "Rotating Service Structure",
+    "description": "A structure on the pad at Launch Complex 39A, Cape Canaveral, used for the Space Shuttle",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "rud"
+    ],
+    "acronym": "rud",
+    "initials": "Rapid Unplanned Disassembly",
+    "description": "A colloquial word for catastrophic failure",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "rtls"
+    ],
+    "acronym": "rtls",
+    "initials": "Return To Launch Site",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "seco"
+    ],
+    "acronym": "seco",
+    "initials": "Second (Stage) Engine Cutoff",
+    "description": "During launch, the ending of the second stage engine burn",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "sep"
+    ],
+    "acronym": "sep",
+    "initials": "Solar Electric Propulsion",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "slc-40"
+    ],
+    "acronym": "slc-40",
+    "initials": "Space Launch Complex 40, Cape Canaveral",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "slc-4e"
+    ],
+    "acronym": "slc-4e",
+    "initials": "Space Launch Complex 4 East, Vandenberg",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "slc-4w"
+    ],
+    "acronym": "slc-4w",
+    "initials": "Space Launch Complex 4 West, Vandenberg",
+    "description": "SpaceX's chosen landing location for launches from SLC-4E",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "spif"
+    ],
+    "acronym": "spif",
+    "initials": "Spacecraft Processing and Integration Facility",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "sfn"
+    ],
+    "acronym": "sfn",
+    "initials": "[Spaceflight Now](http://spaceflightnow.com/)",
+    "description": "A website specialising in spaceflight news",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "ssme"
+    ],
+    "acronym": "ssme",
+    "initials": "Space Shuttle Main Engine",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "ssto"
+    ],
+    "acronym": "ssto",
+    "initials": "Single Stage To Orbit",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "t/e"
+    ],
+    "acronym": "t/e",
+    "initials": "Transporter/Erector",
+    "description": "The structure that takes Falcon from a horizontal to vertical position, and holds the rocket in place on the pad.",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "ula"
+    ],
+    "acronym": "ula",
+    "initials": "United Launch Alliance",
+    "description": "A competitor of SpaceX that produces the Delta and Atlas rocket lines, along with the upcoming Vulcan",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "vab"
+    ],
+    "acronym": "vab",
+    "initials": "Vehicle Assembly Building",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "vafb"
+    ],
+    "acronym": "vafb",
+    "initials": "Vandenberg Air Force Base, California",
+    "description": "site of a SpaceX launch pad that is used for polar and retrograde-LEO flights",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "vv"
+    ],
+    "acronym": "vv",
+    "initials": "Visiting Vehicle",
+    "description": "a term for any vehicle that visits the ISS",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "wdr"
+    ],
+    "acronym": "wdr",
+    "initials": "Wet Dress Rehearsal",
+    "description": "a procedure that involves the loading of propellants, and countdown to launch but without any actual firing of engines, so as to check out systems prior to the actual launch day",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "beo"
+    ],
+    "acronym": "beo",
+    "initials": "Beyond Earth Orbit",
+    "description": "any location or orbit outside of the Earth's gravitational influence",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "geo"
+    ],
+    "acronym": "geo",
+    "initials": "Geostationary Orbit",
+    "description": "a circular geocentric orbit along the equator at 35,786 km altitude, with an orbital period of",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "exactly"
+    ],
+    "acronym": "exactly",
+    "initials": "",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "one day"
+    ],
+    "acronym": "one day",
+    "initials": "",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "gto"
+    ],
+    "acronym": "gto",
+    "initials": "Geostationary Transfer Orbit",
+    "description": "a highly elliptical geocentric orbit with perigee in LEO and apogee at or above GEO",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "heo"
+    ],
+    "acronym": "heo",
+    "initials": "High Earth Orbit",
+    "description": "a geocentric orbit with an altitude above 35,786 km",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "leo"
+    ],
+    "acronym": "leo",
+    "initials": "Low Earth Orbit",
+    "description": "a geocentric orbit with an altitude under 2,000 km",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "loi"
+    ],
+    "acronym": "loi",
+    "initials": "Lunar Orbit Insertion",
+    "description": "a manoeuvre performed during Lunar fly-by which forces a spacecraft into Lunar orbit",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "meo"
+    ],
+    "acronym": "meo",
+    "initials": "Medium Earth Orbit",
+    "description": "a geocentric orbit with an altitude between 2,000 km and 35,786 km",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "moi"
+    ],
+    "acronym": "moi",
+    "initials": "Mars Orbit Insertion",
+    "description": "a manoeuvre performed during Mars fly-by which forces a spacecraft into an aerocentric orbit",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "so"
+    ],
+    "acronym": "so",
+    "initials": "suborbital",
+    "description": "a flight trajectory with enough kinetic energy to reach space, but not enough energy to reach orbit",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "tli"
+    ],
+    "acronym": "tli",
+    "initials": "Trans-Lunar Injection",
+    "description": "A manoeuvre performed in geocentric orbit which puts an object on a trajectory towards the moon",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "tmi"
+    ],
+    "acronym": "tmi",
+    "initials": "Trans-Mars Injection",
+    "description": "A manoeuvre performed in geocentric orbit which puts an object on a Mars-intercepting heliocentric orbit",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "ch4"
+    ],
+    "acronym": "ch4",
+    "initials": "Methane",
+    "description": "A simple hydrocarbon used as a cryogenic fuel",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "lh2"
+    ],
+    "acronym": "lh2",
+    "initials": "Liquid Hydrogen (H2)",
+    "description": "A very chemically simple cryogenic fuel",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "lng"
+    ],
+    "acronym": "lng",
+    "initials": "Liquid Natural Gas",
+    "description": "A cryogenic mixture of simple hydrocarbons, usually 80-99% methane",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "lox"
+    ],
+    "acronym": "lox",
+    "initials": "Liquid Oxygen",
+    "description": "A commonly used cryogenic oxidiser (used in Falcon)",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "mmh"
+    ],
+    "acronym": "mmh",
+    "initials": "Monomethyl Hydrazine",
+    "description": "A highly toxic fuel that is liquid under standard conditions (used in Dragon)",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "n2o4"
+    ],
+    "acronym": "n2o4",
+    "initials": "Dinitrogen Tetroxide, aka DNTO",
+    "description": "A highly toxic oxidiser that is liquid under standard conditions (used in Dragon)",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "rp1"
+    ],
+    "acronym": "rp1",
+    "initials": "Rocket Propellant-1",
+    "description": "A complex hydrocarbon (kerosene) used as a combustible fuel (used in Falcon)",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "avi"
+    ],
+    "acronym": "avi",
+    "initials": "Avionics Operator",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "cc"
+    ],
+    "acronym": "cc",
+    "initials": "Communications Coordinator",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "cc"
+    ],
+    "acronym": "cc",
+    "initials": "Commercial Crew",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "ce"
+    ],
+    "acronym": "ce",
+    "initials": "Chief Engineer",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "dc"
+    ],
+    "acronym": "dc",
+    "initials": "Dragon Controller",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "frc"
+    ],
+    "acronym": "frc",
+    "initials": "Falcon Recovery Coordinator",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "fs"
+    ],
+    "acronym": "fs",
+    "initials": "Flight Software",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "fspo"
+    ],
+    "acronym": "fspo",
+    "initials": "Flight Safety Project Officer",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "fts"
+    ],
+    "acronym": "fts",
+    "initials": "Flight Termination System",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "gc"
+    ],
+    "acronym": "gc",
+    "initials": "Ground Control",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "gnc"
+    ],
+    "acronym": "gnc",
+    "initials": "Guidance, Navigation, & Control",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "gs"
+    ],
+    "acronym": "gs",
+    "initials": "Ground Station",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "ld"
+    ],
+    "acronym": "ld",
+    "initials": "Launch Director",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "lda"
+    ],
+    "acronym": "lda",
+    "initials": "Launch Decision Authority",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "mm"
+    ],
+    "acronym": "mm",
+    "initials": "Mission Manager",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "od"
+    ],
+    "acronym": "od",
+    "initials": "Orbital Director (?)",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "osm"
+    ],
+    "acronym": "osm",
+    "initials": "Operations Safety Manager",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "prop"
+    ],
+    "acronym": "prop",
+    "initials": "Propulsion",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "rc"
+    ],
+    "acronym": "rc",
+    "initials": "Range Coordinator",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "rco"
+    ],
+    "acronym": "rco",
+    "initials": "Range Control Officer",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "roc"
+    ],
+    "acronym": "roc",
+    "initials": "Range Operations Coordinator",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "se"
+    ],
+    "acronym": "se",
+    "initials": "Systems Engineer (?)",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "tvc"
+    ],
+    "acronym": "tvc",
+    "initials": "Thrust Vector Control",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
+  },
+  {
+    "acronyms": [
+      "vc"
+    ],
+    "acronym": "vc",
+    "initials": "Vehicle Control",
+    "description": "",
+    "weight": 1,
+    "source": "/r/spacex wiki"
   }
 ]

@@ -25,13 +25,14 @@ exports.Acronym = Class.extend({
     this.initials    = "";
     this.description = "";
     this.author      = "";
-    this.author_type = "none";
     this.source      = "";
-    this.source_type = "none";
 
     // 0.0 = nobody knows this
     // 0.2 = subsystem-specific term
+    // 0.4 = rocket guidance/status
     // 0.6 = rocket subsystem (fts, s1, etc.)
+    // 0.6 = other hardware
+    // 0.8 = spacex hardware (f9, asds)
     // 1.0 = everybody knows this
     this.weight      = 0;
 
@@ -217,6 +218,7 @@ exports.JSONAcronyms = exports.Acronyms.extend({
       
       if(err) {
         if(callback) callback(err, null);
+        console.log(err);
         return;
       }
 

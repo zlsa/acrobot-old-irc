@@ -3,7 +3,10 @@
   "irc": {
     "nick": "acrobotic",
     "server": "irc.esper.net",
-    "channels": []
+    "channels": [
+      "#acrobot",
+      "#bottorture"
+    ]
   },
   "users": {
     "zlsa": {
@@ -15,7 +18,7 @@
   },
   "mode": {
     "debug": true,
-    "cheeky": false,
+    "cheeky": true,
     "silent": false
   }
 }

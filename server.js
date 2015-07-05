@@ -140,16 +140,20 @@ exports.Server = Class.extend({
     this.bot.notice(to, message);
   },
 
+  say: function(to, message) {
+    this.bot.say(to, message);
+  },
+
   bind_irc_events: function() {
     var server = this;
     
-    this.bot.addListener("message", function (from, to, message, msg) {
-      server.parse_message.call(server, from, to, message, msg);
+    this.bot.addListener("message", function (from, to, message) {
+      server.parse_message.call(server, from, to, message);
     });
     
-    this.bot.addListener("notice", function (nick, to, message, msg) {
+    this.bot.addListener("notice", function (nick, to, message) {
       if(nick != undefined)
-        server.parse_message.call(server, nick, to, message, msg);
+        server.parse_message.call(server, nick, to, message);
     });
     
   },
@@ -168,12 +172,12 @@ exports.Server = Class.extend({
   },
 
   part_channel: function(channel) {
+    channel = channel.toLowerCase();
     if(this.irc.channels.indexOf(channel) < 0) {
       return false;
     }
 
     this.bot.part(channel);
-    this.irc.channels.splice(this.irc.channels.indexOf(channel), 1);
     
     this.save();
     
@@ -220,8 +224,8 @@ exports.Server = Class.extend({
 
   mode_message: function(mode, message, to) {
     if(this.mode_is(mode)) {
-      this.mode_use(mode);
-      this.notice(to, phrases.get(message));
+      this.use_mode(mode);
+      this.say(to, phrases.get(message));
     }
   },
 
@@ -276,13 +280,13 @@ exports.Server = Class.extend({
           var reply = [];
           for(var i=0; i<matches.length; i++) {
             var a = matches[i];
-            if(description)
+            if(description && a.get_description())
               reply.push(a.get_acronym() + ": " + a.get_initials() + ". " + a.get_description());
             else
               reply.push(a.get_acronym() + ": " + a.get_initials());
           }
           
-          server.notice(to, reply.join(", "));
+          server.say(to, reply.join(", "));
         }
         
       });
@@ -405,8 +409,6 @@ exports.Server = Class.extend({
   command_list_ignored: function(from, to, message) {
     var users = this.users_get("ignored", true);
 
-    console.log(users);
-
     if(users.length == 0) {
       this.notice(from, "none found");
     } else {
@@ -471,6 +473,22 @@ exports.Server = Class.extend({
 
   // CHANNEL FUNCTIONS
 
+  command_channel: function(from, to, message) {
+    var type = message.split(" ")[0].toLowerCase();
+    var args = message.substr(type.length + 1);
+
+    if(type == "join") {
+      this.command_add_channel(from, to, args);
+    } else if(type == "part") {
+      this.command_remove_channel(from, to, args);
+    } else if(type == "list") {
+      this.command_list_channels(from, to, args);
+    } else {
+      this.notice(from, "expected one of [join, part, list]");
+    }
+
+  },
+
   command_list_channels: function(from, to, message) {
     this.notice(from, nlp.andify(this.irc.channels));
   },
@@ -494,7 +512,7 @@ exports.Server = Class.extend({
     this.notice(from, "joined " + channel);
   },
 
-  command_remove_channel: function(from, to, channel, msg) {
+  command_remove_channel: function(from, to, channel) {
     if(!this.user_is(from, "admin")) {
       this.notice(from, "you're not an admin!");
       return;
@@ -643,52 +661,55 @@ exports.Server = Class.extend({
     
     var acronyms = message.toLowerCase().split(/\s+/);
 
-    this.print_acronyms(acronyms, from);
+    this.print_acronyms(acronyms, to);
 
   },
 
-  command: function(from, to, command, message, msg) {
+  command: function(from, to, command, message) {
     
     if(command == "quit" || command == "disconnect" || command == "leave") {
-      this.command_quit(from, to, message, msg);
+      this.command_quit(from, to, message);
     } else if(command == "restart") {
-      this.command_restart(from, to, message, msg);
+      this.command_restart(from, to, message);
       
     } else if(command == "define") {
-      this.command_define(from, to, message, msg);
+      this.command_define(from, to, message);
       
     } else if(command == "list") {
-      this.command_list(from, to, message, msg);
+      this.command_list(from, to, message);
       
     } else if(command == "admins") {
-      this.command_list_admins(from, to, message, msg);
+      this.command_list_admins(from, to, message);
       
     } else if(command == "channels") {
-      this.command_list_channels(from, to, message, msg);
+      this.command_list_channels(from, to, message);
+      
+    } else if(command == "channel") {
+      this.command_channel(from, to, message);
       
     } else if(command == "add") {
-      this.command_add(from, to, message, msg);
+      this.command_add(from, to, message);
     } else if(command == "remove") {
-      this.command_remove(from, to, message, msg);
+      this.command_remove(from, to, message);
       
     } else if(command == "ignore") {
-      this.command_add_ignore(from, to, message, msg);
+      this.command_add_ignore(from, to, message);
     } else if(command == "unignore") {
-      this.command_remove_ignore(from, to, message, msg);
+      this.command_remove_ignore(from, to, message);
       
     } else if(command == "join") {
-      this.command_add_channel(from, to, message, msg);
+      this.command_add_channel(from, to, message);
     } else if(command == "part") {
-      this.command_remove_channel(from, to, message, msg);
+      this.command_remove_channel(from, to, message);
       
     } else if(command == "mode") {
-      this.command_mode(from, to, message, msg);
+      this.command_mode(from, to, message);
     } else {
       this.notice(from, "unknown command '" + command + "'");
     }
   },
         
-  parse_command: function(from, to, message, msg) {
+  parse_command: function(from, to, message) {
 
     if(!message) {
       this.notice(from, "expected a command");
@@ -697,11 +718,11 @@ exports.Server = Class.extend({
 
     var command = message.split(" ")[0].toLowerCase();
 
-    this.command(from, to, command, message.substr(command.length + 1), msg);
+    this.command(from, to, command, message.substr(command.length + 1));
 
   },
   
-  parse_message: function(from, to, message, msg) {
+  parse_message: function(from, to, message) {
 
     if(from == this.irc.nick)
       return;
@@ -738,7 +759,7 @@ exports.Server = Class.extend({
     if(direct || type == "command") {
       if(direct)
         to = from;
-      this.parse_command(from, to, message, msg);
+      this.parse_command(from, to, message);
     }
 
   }
