@@ -288,10 +288,18 @@ exports.Server = Class.extend({
           var reply = [];
           for(var i=0; i<matches.length; i++) {
             var a = matches[i];
-            if(description && a.get_description())
-              reply.push(a.get_acronym() + ": " + a.get_initials() + ". " + a.get_description());
-            else
-              reply.push(a.get_acronym() + ": " + a.get_initials());
+
+            var s = "";
+            s += a.get_acronym() + ": ";
+            if(a.get_initials()) {
+              s += a.get_initials();
+            }
+            if(description && a.get_description()) {
+              if(a.get_initials()) s += ". ";
+              s += a.get_description();
+            }
+
+            reply.push(s);
           }
           
           server.say(to, reply.join(", "));

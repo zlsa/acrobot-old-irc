@@ -64,6 +64,10 @@ exports.Acronym = Class.extend({
     this.initials    = o.initials;
     this.description = o.description;
     this.weight      = o.weight;
+
+    if(!this.acronym) console.log("empty acronym");
+    if(!this.initials) console.log(this.acronym + " empty initials");
+    if(!this.description) console.log(this.acronym + " empty description");
     
   },
 
@@ -96,7 +100,7 @@ exports.Acronym = Class.extend({
   },
 
   get_acronym: function() {
-    return this.acronym.toUpperCase();
+    return this.acronym;
   },
 
   // initials
@@ -203,7 +207,9 @@ exports.JSONAcronyms = exports.Acronyms.extend({
       list.push(this.acronyms[i].pack());
     }
     
-    jsonfile.writeFile(this.filename, list, {
+    jsonfile.writeFile(this.filename, {
+      acronyms: list
+    }, {
       spaces: 2
     }, function(err, obj) {
       if(err) {
@@ -235,8 +241,8 @@ exports.JSONAcronyms = exports.Acronyms.extend({
 
       acronyms.acronyms = [];
 
-      for(var i=0; i<obj.length; i++) {
-        acronyms.acronyms.push(new exports.Acronym(obj[i]));
+      for(var i=0; i<obj.acronyms.length; i++) {
+        acronyms.acronyms.push(new exports.Acronym(obj.acronyms[i]));
       }
       
       console.log("restored acronyms from '" + acronyms.filename + "'");
