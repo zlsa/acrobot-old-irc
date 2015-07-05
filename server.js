@@ -335,6 +335,7 @@ exports.Server = Class.extend({
   command_add_ignore: function(from, to, nick) {
     if(!this.user_is(from, "admin")) {
       this.notice(from, "you're not an admin!");
+      return;
     }
     
     if(!nick) {
@@ -364,6 +365,7 @@ exports.Server = Class.extend({
   command_remove_ignore: function(from, to, nick) {
     if(!this.user_is(from, "admin")) {
       this.notice(from, "you're not an admin!");
+      return;
     }
     
     if(!nick) {
@@ -376,7 +378,7 @@ exports.Server = Class.extend({
       return;
     }
 
-    if(!this.user_is(nick, "ignore")) {
+    if(!this.user_is(nick, "ignored")) {
       this.notice(from, "'" + nick + "' already isn't ignored");
       return;
     }

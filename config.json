@@ -7,7 +7,11 @@
       "#acrobot"
     ]
   },
-  "users": {},
+  "users": {
+    "zlsa": {
+      "admin": true
+    }
+  },
   "mode": {
     "debug": true,
     "cheeky": false
