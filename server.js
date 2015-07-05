@@ -14,6 +14,11 @@ exports.is_valid_nick = function(nick) {
   return valid;
 };
 
+exports.is_valid_channel = function(channel) {
+  var valid = new RegExp(/^\#[A-Za-z0-9_\-]+$/).test(channel);
+  return valid;
+};
+
 exports.Server = Class.extend({
   init: function(acronyms, filename) {
 
@@ -33,10 +38,11 @@ exports.Server = Class.extend({
 
     this.mode = {
       debug: true,
-      cheeky: false
+      cheeky: false,
+      silent: false
     };
 
-    this.cooldown = {};
+    this.mode_cooldown = {};
 
     // acronyms
     this.acronyms = acronyms;
@@ -145,12 +151,39 @@ exports.Server = Class.extend({
     
   },
 
+  join_channel: function(channel) {
+    if(this.irc.channels.indexOf(channel) >= 0) {
+      return false;
+    }
+    
+    this.bot.join(channel);
+    this.irc.channels.push(channel);
+
+    this.save();
+    
+    return true;
+  },
+
+  part_channel: function(channel) {
+    if(this.irc.channels.indexOf(channel) < 0) {
+      return false;
+    }
+
+    this.bot.part(channel);
+    this.irc.channels.splice(this.irc.channels.indexOf(channel), 1);
+    
+    this.save();
+    
+    return true;
+  },
+
   // mode
 
   is_valid_mode: function(mode) {
     var valid_modes = [
       "debug",
-      "cheeky"
+      "cheeky",
+      "silent"
     ];
     
     if(valid_modes.indexOf(mode) >= 0) return true;
@@ -163,28 +196,28 @@ exports.Server = Class.extend({
     this.save();
   },
 
-  enabled: function(mode) {
+  mode_enabled: function(mode) {
     if(this.mode[mode]) return true;
     return false;
   },
 
-  is: function(mode) {
-    if(this.enabled(mode)) {
-      if(this.cooldown[mode] && this.cooldown[mode] > util.time()) return false;
+  mode_is: function(mode) {
+    if(this.mode_enabled(mode)) {
+      if(this.mode_cooldown[mode] && this.mode_cooldown[mode] > util.time()) return false;
       return true;
     }
     return false;
   },
 
-  use: function(mode) {
+  use_mode: function(mode) {
     var delay = -1;
     if(mode == "cheeky") delay = 5;
-    this.cooldown[mode] = util.time() + delay;
+    this.mode_cooldown[mode] = util.time() + delay;
   },
 
   mode_message: function(mode, message, to) {
-    if(this.is(mode)) {
-      this.use(mode);
+    if(this.mode_is(mode)) {
+      this.mode_use(mode);
       this.notice(to, phrases.get(message));
     }
   },
@@ -330,7 +363,7 @@ exports.Server = Class.extend({
     this.notice(nick, "'" + from + "' has removed you as an admin");
   },
 
-  // USER FUNCTIONS (ADMIN)
+  // USER FUNCTIONS (IGNORE)
 
   command_add_ignore: function(from, to, nick) {
     if(!this.user_is(from, "admin")) {
@@ -387,6 +420,54 @@ exports.Server = Class.extend({
     this.notice(from, "'" + nick + "' is no longer ignored");
   },
 
+  // CHANNEL FUNCTIONS
+
+  command_add_channel: function(from, to, channel) {
+    if(!this.user_is(from, "admin")) {
+      this.notice(from, "you're not an admin!");
+      return;
+    }
+    
+    if(!channel) {
+      channel = to;
+    }
+    
+    if(!exports.is_valid_channel(channel)) {
+      this.notice(from, "invalid channel name '" + channel + "'");
+      return;
+    }
+
+    if(!this.join_channel(channel)) {
+      this.notice(from, "already joined " + channel);
+      return;
+    }
+    
+    this.notice(from, "joined " + channel);
+  },
+
+  command_remove_channel: function(from, to, channel) {
+    if(!this.user_is(from, "admin")) {
+      this.notice(from, "you're not an admin!");
+      return;
+    }
+    
+    if(!channel) {
+      channel = to;
+    }
+    
+    if(!exports.is_valid_channel(channel)) {
+      this.notice(from, "invalid channel name '" + channel + "'");
+      return;
+    }
+
+    if(!this.part_channel(channel)) {
+      this.notice(from, "already parted " + channel);
+      return;
+    }
+    
+    this.notice(from, "parted " + channel);
+  },
+
   // ADD FUNCTION
 
   command_add: function(from, to, message) {
@@ -402,8 +483,10 @@ exports.Server = Class.extend({
       this.command_add_admin(from, to, args);
     } else if(type == "ignore") {
       this.command_add_ignore(from, to, args);
+    } else if(type == "channel") {
+      this.command_add_channel(from, to, args);
     } else {
-      this.notice(from, "expected one of [admin, ignore]");
+      this.notice(from, "expected one of [admin, ignore, channel]");
     }
 
   },
@@ -421,8 +504,10 @@ exports.Server = Class.extend({
       this.command_remove_admin(from, to, args);
     } else if(type == "ignore") {
       this.command_remove_ignore(from, to, args);
+    } else if(type == "channel") {
+      this.command_remove_channel(from, to, args);
     } else {
-      this.notice(from, "expected one of [admin, ignore]");
+      this.notice(from, "expected one of [admin, ignore, channel]");
     }
 
   },
@@ -460,8 +545,9 @@ exports.Server = Class.extend({
     var mode = args[0];
 
     if(this.is_valid_mode(mode)) {
+      var old_mode = this.mode_enabled(mode);
       this.set_mode(mode, value);
-      this.notice(from, "'" + mode + "' has been set to " + this.enabled(mode));
+      this.notice(from, "'" + mode + "' (was " + old_mode + ") has been set to " + this.mode_enabled(mode));
     } else {
       this.notice(from, "invalid mode '" + mode + "'");
       return;
@@ -480,17 +566,27 @@ exports.Server = Class.extend({
     } else if(command == "remove") {
       this.command_remove(from, to, message);
       
+    } else if(command == "ignore") {
+      this.command_add_ignore(from, to, message);
+    } else if(command == "unignore") {
+      this.command_remove_ignore(from, to, message);
+      
+    } else if(command == "join") {
+      this.command_add_channel(from, to, message);
+    } else if(command == "part") {
+      this.command_remove_channel(from, to, message);
+      
     } else if(command == "mode") {
       this.command_mode(from, to, message);
     } else {
-      this.notice(from, "unknown command");
+      this.notice(from, "unknown command '" + command + "'");
     }
   },
         
   parse_command: function(from, to, message) {
 
     if(!message) {
-      this.notice(from, "! expected a command");
+      this.notice(from, "expected a command");
       return;
     }
 
@@ -502,12 +598,13 @@ exports.Server = Class.extend({
   
   parse_message: function(from, to, message) {
 
-    var server = this;
-    
-    if(from == this.irc.nick) return;
+    if(from == this.irc.nick)
+      return;
 
     if(this.user_is(from, "ignored"))
       return;
+
+    var server = this;
     
     message = message.trim();
 
@@ -527,6 +624,8 @@ exports.Server = Class.extend({
     }
 
     if(type == "natural") {
+      if(this.mode_is("silent"))
+        return;
       this.parse_natural(from, to, message);
     } else if(type == "command") {
       this.parse_command(from, to, message);
