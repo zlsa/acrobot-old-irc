@@ -16,29 +16,33 @@ exports.preprocess = function(text) {
   return words;
 };
 
-exports.classify = function(text) {
+exports.classify_what = function(me, words) {
+  var cfn = {};
+  cfn.action = "what";
+  
+  var offset = 1;
+  
+  if((words[1] == "is" || words[1] == "are") && words.length >= 2) offset += 1;
+  if(offset == 2 && words[2] == "the" && words.length >= 3) offset += 1;
+
+  var subjects = words.slice(offset).join(" ").split(/\s+|and/g);
+
+  cfn.subjects = [];
+  
+  for(var i=0; i<subjects.length; i++) {
+    if(subjects[i]) cfn.subjects.push(subjects[i]);
+  }
+  
+  return cfn;
+};
+
+exports.classify = function(me, text) {
   words = exports.preprocess(text);
 
   if(words.length >= 1) {
 
     if(words[0] == "what") {
-      var cfn = {};
-      cfn.action = "what";
-      
-      var offset = 1;
-      
-      if((words[1] == "is" || words[1] == "are") && words.length >= 2) offset += 1;
-      if(offset == 2 && words[2] == "the" && words.length >= 3) offset += 1;
-
-      var subjects = words.slice(offset).join(" ").split(/\s+|and/g);
-
-      cfn.subjects = [];
-      
-      for(var i=0; i<subjects.length; i++) {
-        if(subjects[i]) cfn.subjects.push(subjects[i]);
-      }
-      
-      return cfn;
+      return exports.classify_what(me, words);
     }
   }
 

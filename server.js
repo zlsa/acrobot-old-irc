@@ -10,7 +10,7 @@ var phrases  = require("./phrases");
 exports.CONFIG_VERSION = 1;
 
 exports.Server = Class.extend({
-  init: function(acronyms) {
+  init: function(acronyms, filename) {
 
     // these are defaults ONLY! they will be overwritten by config.json
     this.irc = {
@@ -20,14 +20,14 @@ exports.Server = Class.extend({
     };
       
     this.users = {
-      "zlsa": {
-        admin:  false,
-        ignore: false
-      }
+      // "zlsa": {
+      //   admin:  false,
+      //   ignore: false
+      // }
     };
 
     this.mode = {
-      debug: false,
+      debug: true,
       cheeky: false
     };
 
@@ -37,7 +37,7 @@ exports.Server = Class.extend({
     this.acronyms = acronyms;
 
     // config filename
-    this.filename = "config.json";
+    this.filename = filename || "config.json";
 
     // IRC server
     this.bot = new irc.Client(this.irc.server, this.irc.nick, {
@@ -58,9 +58,10 @@ exports.Server = Class.extend({
     var server = this;
     
     jsonfile.writeFile(this.filename, {
-      irc:   this.irc,
-      users: this.users,
-      mode:  this.mode
+      version: exports.CONFIG_VERSION,
+      irc:     this.irc,
+      users:   this.users,
+      mode:    this.mode
     }, {
       spaces: 2
     }, function(err, obj) {
@@ -68,6 +69,8 @@ exports.Server = Class.extend({
         console.warn("could not save to file '" + server.filename + "'")
         return;
       }
+
+      console.log("saved config to '" + server.filename + "'");
       
       if(callback) callback();
       
@@ -80,12 +83,16 @@ exports.Server = Class.extend({
     jsonfile.readFile(this.filename, function(err, obj) {
       
       if(err) {
+        console.log("could not open config file '" + server.filename + "'");
         // file doesn't exist yet, create it with the above defaults
         server.save();
+        callback(null);
         return;
       }
 
-      if(server.version != exports.CONFIG_VERSION) {
+      if(obj.version != exports.CONFIG_VERSION) {
+        console.log("config file '" + server.filename + "' is older version");
+        server.save();
         callback(null);
         return;
       }
@@ -93,6 +100,8 @@ exports.Server = Class.extend({
       server.irc   = obj.irc;
       server.users = obj.users;
       server.mode  = obj.mode;
+      
+      console.log("restored config from '" + server.filename + "'");
       
       if(callback) callback(obj);
       
@@ -106,6 +115,11 @@ exports.Server = Class.extend({
     this.bot.connect(5, function() {
       if(callback) callback();
     });
+  },
+
+  disconnect: function(callback) {
+    this.bot.disconnect(callback);
+    console.log("disconnected from irc server");
   },
 
   notice: function(to, message) {
@@ -142,15 +156,25 @@ exports.Server = Class.extend({
   },
 
   use: function(mode) {
-    var delay = 1;
+    var delay = -1;
     if(mode == "cheeky") delay = 5;
     this.cooldown[mode] = util.time() + delay;
   },
 
-  mode_message: function(mode, message) {
+  mode_message: function(mode, message, to) {
     if(this.is(mode)) {
       this.use(mode);
       this.notice(to, phrases.get(message));
+    }
+  },
+
+  // users
+
+  user_is: function(nick, status) {
+    if(nick in this.users) {
+      return this.users[nick][status];
+    } else {
+      return null;
     }
   },
 
@@ -159,7 +183,7 @@ exports.Server = Class.extend({
   parse_what: function(cfn, to) {
 
     if(cfn.subjects.length <= 0) {
-      this.cheeky_error("incomplete-short-sentence");
+      this.mode_message("cheeky", "incomplete-short-sentence", to);
       return;
     }
 
@@ -191,21 +215,74 @@ exports.Server = Class.extend({
     }
 
   },
-        
-  parse_message: function(from, to, message) {
 
-    var server = this;
-    
-    if(from == this.irc.nick) return;
-
-    var cfn = nlp.classify(message);
+  parse_natural: function(from, to, message) {
+    var cfn = nlp.classify(this.irc.nick, message);
 
     this.notice("zlsa", JSON.stringify(cfn));
 
     if(cfn.action == "what") {
       this.parse_what(cfn, to);
     }
+  },
+
+  command_quit: function(from, to, message) {
+    if(this.user_is(from, "admin"))
+      this.disconnect();
+    else
+      this.notice(from, "you're not an admin!");
+  },
+
+  command: function(from, to, command, message) {
+    if(command == "quit" || command == "disconnect") {
+      this.command_quit(from, to, message);
+    } else {
+      this.notice(from, "unknown command");
+    }
+  },
+        
+  parse_command: function(from, to, message) {
+
+    if(!message) {
+      this.notice(from, "! expected a command");
+      return;
+    }
+
+    var command = message.split(" ")[0].toLowerCase();
+
+    this.command(from, to, "quit", message.substr(command.length + 1));
+
+  },
+  
+  parse_message: function(from, to, message) {
+
+    message = message.trim();
+
+    var server = this;
     
+    if(from == this.irc.nick) return;
+
+    var type = "natural";
+
+    if(to == this.irc.nick) type = "command";
+    
+    if(message.indexOf(this.irc.nick) == 0) {
+      type = "command";
+      var first_space = message.indexOf(" ");
+      
+      if(first_space <= 0) {
+        message = "";
+      } else {
+        message = message.substr(first_space + 1);
+      }
+    }
+
+    if(type == "natural") {
+      this.parse_natural(from, to, message);
+    } else if(type == "command") {
+      this.parse_command(from, to, message);
+    }
+
   }
   
 });

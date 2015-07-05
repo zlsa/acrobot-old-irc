@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "irc": {
+    "nick": "acrobotic",
+    "server": "irc.esper.net",
+    "channels": [
+      "#acrobot"
+    ]
+  },
+  "users": {
+    "zlsa": {
+      "admin": true
+    }
+  },
+  "mode": {
+    "debug": true,
+    "cheeky": false
+  }
+}

@@ -1,0 +1,32 @@
+[
+  {
+    "id": 0,
+    "acronyms": [
+      "fts"
+    ],
+    "acronym": "fts",
+    "initials": "Flight Termination System",
+    "description": "When a launch vehicle departs from its planned trajectory, the flight termination system is used to destroy the rocket to prevent damage to people or assets.",
+    "weight": 0
+  },
+  {
+    "id": 1,
+    "acronyms": [
+      "ksp"
+    ],
+    "acronym": "ksp",
+    "initials": "Kerbal Space Program",
+    "description": "A very popular space sandbox simulation game.",
+    "weight": 0
+  },
+  {
+    "id": 2,
+    "acronyms": [
+      "los"
+    ],
+    "acronym": "los",
+    "initials": "Loss of Signal",
+    "description": "Used to signify that an antenna has lost the radio signal from the vehicle. This occurs when the vehicle travels below the horizon.",
+    "weight": 0
+  }
+]
