@@ -3,18 +3,19 @@
   "irc": {
     "nick": "acrobotic",
     "server": "irc.esper.net",
-    "channels": [
-      "#acrobot"
-    ]
+    "channels": []
   },
   "users": {
     "zlsa": {
+      "admin": true
+    },
+    "zlsa_": {
       "admin": true
     }
   },
   "mode": {
     "debug": true,
     "cheeky": false,
-    "silent": true
+    "silent": false
   }
 }

@@ -116,7 +116,11 @@ exports.Acronym = Class.extend({
     this.description = description;
     
     this.updated();
-  }
+  },
+  
+  get_description: function() {
+    return this.description;
+  },
   
 });
 

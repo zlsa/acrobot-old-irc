@@ -50,17 +50,6 @@ exports.Server = Class.extend({
     // config filename
     this.filename = filename || "config.json";
 
-    // IRC server
-    this.bot = new irc.Client(this.irc.server, this.irc.nick, {
-      channels: this.irc.channels,
-
-      userName: this.irc.nick,
-      realName: "Acrobot",
-      autoConnect: false,
-    });
-
-    this.bind_irc_events();
-
   },
 
   // save/restore
@@ -122,6 +111,20 @@ exports.Server = Class.extend({
   // IRC connection
 
   connect: function(callback) {
+
+    if(!this.bot) {
+      this.bot = new irc.Client(this.irc.server, this.irc.nick, {
+        channels: this.irc.channels,
+
+        userName: this.irc.nick,
+        realName: "Acrobot",
+        autoConnect: false,
+      });
+
+      this.bind_irc_events();
+
+    }
+
     var server = this;
     this.bot.connect(5, function() {
       if(callback) callback();
@@ -140,13 +143,13 @@ exports.Server = Class.extend({
   bind_irc_events: function() {
     var server = this;
     
-    this.bot.addListener("message", function (from, to, message) {
-      server.parse_message.call(server, from, to, message);
+    this.bot.addListener("message", function (from, to, message, msg) {
+      server.parse_message.call(server, from, to, message, msg);
     });
     
-    this.bot.addListener("notice", function (nick, to, message) {
+    this.bot.addListener("notice", function (nick, to, message, msg) {
       if(nick != undefined)
-        server.parse_message.call(server, nick, to, message);
+        server.parse_message.call(server, nick, to, message, msg);
     });
     
   },
@@ -242,22 +245,27 @@ exports.Server = Class.extend({
     this.save();
   },
 
-  // parsing
-
-  parse_what: function(cfn, to) {
-
-    if(cfn.subjects.length <= 0) {
-      this.mode_message("cheeky", "incomplete-short-sentence", to);
-      return;
-    }
-
-    var server = this;
+  users_get: function(nick, status, value) {
+    var users = [];
     
+    for(var i in this.users) {
+      var u = this.users[i];
+      if(u[status] == value) users.push(i);
+    }
+    
+    return users;
+  },
+
+  print_acronyms: function(acronyms, to, description) {
+    if(description == undefined) description = true;
+    
+    var server = this;
+
     var got_acronyms = []; // avoid printing out duplicates
 
-    for(var i=0; i<cfn.subjects.length; i++) {
+    for(var i=0; i<acronyms.length; i++) {
 
-      var acronym = acrs.clean(cfn.subjects[i]);
+      var acronym = acrs.clean(acronyms[i]);
 
       if(got_acronyms.indexOf(acronym) >= 0) continue;
       got_acronyms.push(acronym);
@@ -268,7 +276,10 @@ exports.Server = Class.extend({
           var reply = [];
           for(var i=0; i<matches.length; i++) {
             var a = matches[i];
-            reply.push(a.get_acronym() + ": " + a.get_initials());
+            if(description)
+              reply.push(a.get_acronym() + ": " + a.get_initials() + ". " + a.get_description());
+            else
+              reply.push(a.get_acronym() + ": " + a.get_initials());
           }
           
           server.notice(to, reply.join(", "));
@@ -277,17 +288,33 @@ exports.Server = Class.extend({
       });
 
     }
+    
+  },
 
+  // parsing
+
+  parse_what: function(cfn, to) {
+
+    if(cfn.subjects.length <= 0) {
+      this.mode_message("cheeky", "incomplete-short-sentence", to);
+      return false;
+    }
+
+    this.print_acronyms(cfn.subjects, to);
+
+    return true;
+    
   },
 
   parse_natural: function(from, to, message) {
     var cfn = nlp.classify(this.irc.nick, message);
 
-    this.notice("zlsa", JSON.stringify(cfn));
-
     if(cfn.action == "what") {
-      this.parse_what(cfn, to);
+      return this.parse_what(cfn, to);
     }
+
+    return false;
+    
   },
 
   command_quit: function(from, to, message) {
@@ -305,6 +332,16 @@ exports.Server = Class.extend({
   },
 
   // USER FUNCTIONS (ADMIN)
+
+  command_list_admins: function(from, to, message) {
+    var users = this.users_get("admin", true);
+
+    if(users.length == 0) {
+      this.notice(from, "none found");
+    } else {
+      this.notice(from, nlp.andify(users));
+    }
+  },
 
   command_add_admin: function(from, to, nick) {
     if(!this.user_is(from, "admin")) {
@@ -365,6 +402,18 @@ exports.Server = Class.extend({
 
   // USER FUNCTIONS (IGNORE)
 
+  command_list_ignored: function(from, to, message) {
+    var users = this.users_get("ignored", true);
+
+    console.log(users);
+
+    if(users.length == 0) {
+      this.notice(from, "none found");
+    } else {
+      this.notice(from, nlp.andify(users));
+    }
+  },
+
   command_add_ignore: function(from, to, nick) {
     if(!this.user_is(from, "admin")) {
       this.notice(from, "you're not an admin!");
@@ -422,14 +471,14 @@ exports.Server = Class.extend({
 
   // CHANNEL FUNCTIONS
 
+  command_list_channels: function(from, to, message) {
+    this.notice(from, nlp.andify(this.irc.channels));
+  },
+
   command_add_channel: function(from, to, channel) {
     if(!this.user_is(from, "admin")) {
       this.notice(from, "you're not an admin!");
       return;
-    }
-    
-    if(!channel) {
-      channel = to;
     }
     
     if(!exports.is_valid_channel(channel)) {
@@ -445,18 +494,28 @@ exports.Server = Class.extend({
     this.notice(from, "joined " + channel);
   },
 
-  command_remove_channel: function(from, to, channel) {
+  command_remove_channel: function(from, to, channel, msg) {
     if(!this.user_is(from, "admin")) {
       this.notice(from, "you're not an admin!");
       return;
     }
     
     if(!channel) {
-      channel = to;
+      if(to[0] == "#") {
+        channel = to;
+      } else {
+        this.notice(from, "cannot part from private chat");
+        return;
+      }
     }
     
     if(!exports.is_valid_channel(channel)) {
       this.notice(from, "invalid channel name '" + channel + "'");
+      return;
+    }
+
+    if(this.irc.channels.length == 1) {
+      this.notice(from, "cannot part last channel");
       return;
     }
 
@@ -469,6 +528,27 @@ exports.Server = Class.extend({
   },
 
   // ADD FUNCTION
+
+  command_list: function(from, to, message) {
+    if(!message) {
+      this.notice(from, "expected additional arguments to 'list'");
+      return;
+    }
+    
+    var type = message.split(" ")[0].toLowerCase();
+    var args = message.substr(type.length + 1);
+
+    if(type == "admin" || type == "admins") {
+      this.command_list_admins(from, to, args);
+    } else if(type == "ignore" || type == "ignored") {
+      this.command_list_ignored(from, to, args);
+    } else if(type == "channel" || type == "channels") {
+      this.command_list_channels(from, to, args);
+    } else {
+      this.notice(from, "expected one of [admins, ignored, channels]");
+    }
+
+  },
 
   command_add: function(from, to, message) {
     if(!message) {
@@ -555,35 +635,60 @@ exports.Server = Class.extend({
 
   },
 
-  command: function(from, to, command, message) {
+  command_define: function(from, to, message) {
+    if(!message) {
+      this.notice(from, "expected acronym(s)");
+      return;
+    }
+    
+    var acronyms = message.toLowerCase().split(/\s+/);
+
+    this.print_acronyms(acronyms, from);
+
+  },
+
+  command: function(from, to, command, message, msg) {
+    
     if(command == "quit" || command == "disconnect" || command == "leave") {
-      this.command_quit(from, to, message);
+      this.command_quit(from, to, message, msg);
     } else if(command == "restart") {
-      this.command_restart(from, to, message);
+      this.command_restart(from, to, message, msg);
+      
+    } else if(command == "define") {
+      this.command_define(from, to, message, msg);
+      
+    } else if(command == "list") {
+      this.command_list(from, to, message, msg);
+      
+    } else if(command == "admins") {
+      this.command_list_admins(from, to, message, msg);
+      
+    } else if(command == "channels") {
+      this.command_list_channels(from, to, message, msg);
       
     } else if(command == "add") {
-      this.command_add(from, to, message);
+      this.command_add(from, to, message, msg);
     } else if(command == "remove") {
-      this.command_remove(from, to, message);
+      this.command_remove(from, to, message, msg);
       
     } else if(command == "ignore") {
-      this.command_add_ignore(from, to, message);
+      this.command_add_ignore(from, to, message, msg);
     } else if(command == "unignore") {
-      this.command_remove_ignore(from, to, message);
+      this.command_remove_ignore(from, to, message, msg);
       
     } else if(command == "join") {
-      this.command_add_channel(from, to, message);
+      this.command_add_channel(from, to, message, msg);
     } else if(command == "part") {
-      this.command_remove_channel(from, to, message);
+      this.command_remove_channel(from, to, message, msg);
       
     } else if(command == "mode") {
-      this.command_mode(from, to, message);
+      this.command_mode(from, to, message, msg);
     } else {
       this.notice(from, "unknown command '" + command + "'");
     }
   },
         
-  parse_command: function(from, to, message) {
+  parse_command: function(from, to, message, msg) {
 
     if(!message) {
       this.notice(from, "expected a command");
@@ -592,11 +697,11 @@ exports.Server = Class.extend({
 
     var command = message.split(" ")[0].toLowerCase();
 
-    this.command(from, to, command, message.substr(command.length + 1));
+    this.command(from, to, command, message.substr(command.length + 1), msg);
 
   },
   
-  parse_message: function(from, to, message) {
+  parse_message: function(from, to, message, msg) {
 
     if(from == this.irc.nick)
       return;
@@ -608,9 +713,10 @@ exports.Server = Class.extend({
     
     message = message.trim();
 
-    var type = "natural";
+    var type   = "natural";
+    var direct = false;
 
-    if(to == this.irc.nick) type = "command";
+    if(to == this.irc.nick) direct = true;
     
     if(message.indexOf(this.irc.nick) == 0) {
       type = "command";
@@ -627,8 +733,12 @@ exports.Server = Class.extend({
       if(this.mode_is("silent"))
         return;
       this.parse_natural(from, to, message);
-    } else if(type == "command") {
-      this.parse_command(from, to, message);
+    }
+
+    if(direct || type == "command") {
+      if(direct)
+        to = from;
+      this.parse_command(from, to, message, msg);
     }
 
   }
