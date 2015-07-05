@@ -141,6 +141,17 @@ exports.Server = Class.extend({
     this.bot.notice(to, message);
   },
 
+  direct: function(sender, all, message) {
+    if(sender == all)
+      this.say(sender, message);
+    else
+      this.notice(sender, message);
+  },
+
+  all: function(all, message) {
+    this.say(all, message);
+  },
+
   say: function(to, message) {
     this.bot.say(to, message);
   },
@@ -237,7 +248,7 @@ exports.Server = Class.extend({
     if(nick in this.users) {
       return this.users[nick][status];
     } else {
-      return null;
+      return false;
     }
   },
 
@@ -251,12 +262,12 @@ exports.Server = Class.extend({
     this.save();
   },
 
-  users_get: function(nick, status, value) {
+  users_get: function(status, value) {
     var users = [];
     
     for(var i in this.users) {
       var u = this.users[i];
-      if(u[status] == value) users.push(i);
+      if(this.user_is(i, status) == value) users.push(i);
     }
     
     return users;
@@ -315,259 +326,280 @@ exports.Server = Class.extend({
 
   // parsing
 
-  parse_what: function(cfn, to) {
+  parse_what: function(cfn, all) {
 
     if(cfn.subjects.length <= 0) {
-      this.mode_message("cheeky", "incomplete-short-sentence", to);
+      this.mode_message("cheeky", "incomplete-short-sentence", all);
       return false;
     }
 
-    this.print_acronyms(cfn.subjects, to);
+    this.print_acronyms(cfn.subjects, all);
 
     return true;
     
   },
 
-  parse_natural: function(from, to, message) {
+  parse_natural: function(sender, all, message) {
     var cfn = nlp.classify(this.irc.nick, message);
 
     if(cfn.action == "what") {
-      return this.parse_what(cfn, to);
+      return this.parse_what(cfn, all);
     }
 
     return false;
     
   },
 
-  command_quit: function(from, to, message) {
-    if(this.user_is(from, "admin"))
+  command_quit: function(sender, all, message) {
+    if(this.user_is(sender, "admin"))
       this.disconnect();
     else
-      this.notice(from, "you're not an admin!");
+      this.direct(sender, all, "you're not an admin!");
   },
 
-  command_restart: function(from, to, message) {
-    if(this.user_is(from, "admin"))
+  command_restart: function(sender, all, message) {
+    if(this.user_is(sender, "admin"))
       process.exit();
     else
-      this.notice(from, "you're not an admin!");
+      this.direct(sender, all, "you're not an admin!");
   },
 
   // USER FUNCTIONS (ADMIN)
 
-  command_list_admins: function(from, to, message) {
+  command_admin: function(sender, all, message) {
+    if(!message) {
+      this.direct(sender, all, "expected additional arguments to 'admin'");
+      return;
+    }
+    
+    var type = message.split(" ")[0].toLowerCase();
+    var args = message.substr(type.length + 1);
+
+    if(type == "list") {
+      this.command_list_admin(sender, all, args);
+    } else if(type == "add") {
+      this.command_add_admin(sender, all, args);
+    } else if(type == "remove") {
+      this.command_remove_admin(sender, all, args);
+    } else {
+      this.direct(sender, all, "expected one of [list, add, remove]");
+    }
+
+  },
+
+  command_list_admins: function(sender, all, message) {
     var users = this.users_get("admin", true);
 
     if(users.length == 0) {
-      this.notice(from, "none found");
+      this.all(all, "none found");
     } else {
-      this.notice(from, nlp.andify(users));
+      this.all(all, nlp.andify(users));
     }
   },
 
-  command_add_admin: function(from, to, nick) {
-    if(!this.user_is(from, "admin")) {
-      this.notice(from, "you're not an admin!");
+  command_add_admin: function(sender, all, nick) {
+    if(!this.user_is(sender, "admin")) {
+      this.direct(sender, all, "you're not an admin!");
       return;
     }
     
     if(!nick) {
-      this.notice(from, "expected a nick to add as admin");
+      this.direct(sender, all, "expected a nick to add as admin");
       return;
     }
     
     if(!exports.is_valid_nick(nick)) {
-      this.notice(from, "invalid nick '" + nick + "'");
+      this.direct(sender, all, "invalid nick '" + nick + "'");
       return;
     }
 
     if(this.user_is(nick, "admin")) {
-      this.notice(from, "'" + nick + "' is already an admin");
+      this.direct(sender, all, "'" + nick + "' is already an admin");
       return;
     }
     
     this.user_set(nick, "admin", true);
-    this.notice(from, "'" + nick + "' is now an admin");
-    this.notice(nick, "'" + from + "' has made you an admin");
+    
+    this.direct(sender, all, "'" + nick + "' is now an admin");
   },
 
-  command_remove_admin: function(from, to, nick) {
-    if(!this.user_is(from, "admin")) {
-      this.notice(from, "you're not an admin!");
+  command_remove_admin: function(sender, all, nick) {
+    if(!this.user_is(sender, "admin")) {
+      this.direct(sender, all, "you're not an admin!");
       return;
     }
     
     if(!nick) {
-      this.notice(from, "expected a nick to remove as admin");
+      this.direct(sender, all, "expected a nick to remove as admin");
       return;
     }
     
     if(!exports.is_valid_nick(nick)) {
-      this.notice(from, "invalid nick '" + nick + "'");
+      this.direct(sender, all, "invalid nick '" + nick + "'");
       return;
     }
 
-    if(nick == from) {
-      this.notice(from, "you can't remove yourself as an admin");
+    if(nick == sender) {
+      this.direct(sender, all, "you can't remove yourself as an admin");
       return;
     }
     
     if(!this.user_is(nick, "admin")) {
-      this.notice(from, "'" + nick + "' already isn't an admin");
+      this.direct(sender, all, "'" + nick + "' already isn't an admin");
       return;
     }
 
     this.user_set(nick, "admin", false);
-    this.notice(from, "'" + nick + "' is no longer an admin");
-    this.notice(nick, "'" + from + "' has removed you as an admin");
+    this.direct(sender, all, "'" + nick + "' is no longer an admin");
   },
 
   // USER FUNCTIONS (IGNORE)
 
-  command_list_ignored: function(from, to, message) {
+  command_list_ignored: function(sender, all, message) {
     var users = this.users_get("ignored", true);
 
     if(users.length == 0) {
-      this.notice(from, "none found");
+      this.direct(sender, all, "none found");
     } else {
-      this.notice(from, nlp.andify(users));
+      this.direct(sender, all, nlp.andify(users));
     }
   },
 
-  command_add_ignore: function(from, to, nick) {
-    if(!this.user_is(from, "admin")) {
-      this.notice(from, "you're not an admin!");
+  command_add_ignore: function(sender, all, nick) {
+    if(!this.user_is(sender, "admin")) {
+      this.direct(sender, all, "you're not an admin!");
       return;
     }
     
     if(!nick) {
-      this.notice(from, "expected a nick to add to ignore list");
+      this.direct(sender, all, "expected a nick to add to ignore list");
       return;
     }
     
     if(!exports.is_valid_nick(nick)) {
-      this.notice(from, "invalid nick '" + nick + "'");
+      this.direct(sender, all, "invalid nick '" + nick + "'");
       return;
     }
 
-    if(nick == from) {
-      this.notice(from, "you can't ignore yourself");
+    if(nick == sender) {
+      this.direct(sender, all, "you can't ignore yourself");
       return;
     }
     
     if(this.user_is(nick, "ignored")) {
-      this.notice(from, "'" + nick + "' is already ignored");
+      this.direct(sender, all, "'" + nick + "' is already ignored");
       return;
     }
     
     this.user_set(nick, "ignored", true);
-    this.notice(from, "'" + nick + "' is now ignored");
+    
+    this.direct(sender, all, "'" + nick + "' is now ignored");
   },
 
-  command_remove_ignore: function(from, to, nick) {
-    if(!this.user_is(from, "admin")) {
-      this.notice(from, "you're not an admin!");
+  command_remove_ignore: function(sender, all, nick) {
+    if(!this.user_is(sender, "admin")) {
+      this.direct(sender, all, "you're not an admin!");
       return;
     }
     
     if(!nick) {
-      this.notice(from, "expected a nick to remove from ignore list");
+      this.direct(sender, all, "expected a nick to remove from ignore list");
       return;
     }
     
     if(!exports.is_valid_nick(nick)) {
-      this.notice(from, "invalid nick '" + nick + "'");
+      this.direct(sender, all, "invalid nick '" + nick + "'");
       return;
     }
 
     if(!this.user_is(nick, "ignored")) {
-      this.notice(from, "'" + nick + "' already isn't ignored");
+      this.direct(sender, all, "'" + nick + "' already isn't ignored");
       return;
     }
 
     this.user_set(nick, "ignored", false);
-    this.notice(from, "'" + nick + "' is no longer ignored");
+    this.direct(sender, all, "'" + nick + "' is no longer ignored");
   },
 
   // CHANNEL FUNCTIONS
 
-  command_channel: function(from, to, message) {
+  command_channel: function(sender, all, message) {
     var type = message.split(" ")[0].toLowerCase();
     var args = message.substr(type.length + 1);
 
     if(type == "join") {
-      this.command_add_channel(from, to, args);
+      this.command_add_channel(sender, all, args);
     } else if(type == "part") {
-      this.command_remove_channel(from, to, args);
+      this.command_remove_channel(sender, all, args);
     } else if(type == "list") {
-      this.command_list_channels(from, to, args);
+      this.command_list_channels(sender, all, args);
     } else {
-      this.notice(from, "expected one of [join, part, list]");
+      this.direct(sender, all, "expected one of [join, part, list]");
     }
 
   },
 
-  command_list_channels: function(from, to, message) {
-    this.notice(from, nlp.andify(this.irc.channels));
+  command_list_channels: function(sender, all, message) {
+    this.all(all, nlp.andify(this.irc.channels));
   },
 
-  command_add_channel: function(from, to, channel) {
-    if(!this.user_is(from, "admin")) {
-      this.notice(from, "you're not an admin!");
+  command_add_channel: function(sender, all, channel) {
+    if(!this.user_is(sender, "admin")) {
+      this.direct(sender, all, "you're not an admin!");
       return;
     }
     
     if(!exports.is_valid_channel(channel)) {
-      this.notice(from, "invalid channel name '" + channel + "'");
+      this.direct(sender, all, "invalid channel name '" + channel + "'");
       return;
     }
 
     if(!this.join_channel(channel)) {
-      this.notice(from, "already joined " + channel);
+      this.direct(sender, all, "already joined " + channel);
       return;
     }
     
-    this.notice(from, "joined " + channel);
+    this.direct(sender, all, "joined " + channel);
   },
 
-  command_remove_channel: function(from, to, channel) {
-    if(!this.user_is(from, "admin")) {
-      this.notice(from, "you're not an admin!");
+  command_remove_channel: function(sender, all, channel) {
+    if(!this.user_is(sender, "admin")) {
+      this.direct(sender, all, "you're not an admin!");
       return;
     }
     
     if(!channel) {
-      if(to[0] == "#") {
-        channel = to;
+      if(sender[0] == "#") {
+        channel = sender;
       } else {
-        this.notice(from, "cannot part from private chat");
+        this.direct(sender, all, "cannot part from private chat");
         return;
       }
     }
     
     if(!exports.is_valid_channel(channel)) {
-      this.notice(from, "invalid channel name '" + channel + "'");
+      this.direct(sender, all, "invalid channel name '" + channel + "'");
       return;
     }
 
     if(this.irc.channels.length == 1) {
-      this.notice(from, "cannot part last channel");
+      this.direct(sender, all, "cannot part last channel");
       return;
     }
 
     if(!this.part_channel(channel)) {
-      this.notice(from, "already parted " + channel);
+      this.direct(sender, all, "already parted " + channel);
       return;
     }
     
-    this.notice(from, "parted " + channel);
+    this.direct(sender, all, "parted " + channel);
   },
 
   // ADD FUNCTION
 
-  command_list: function(from, to, message) {
+  command_list: function(sender, all, message) {
     if(!message) {
-      this.notice(from, "expected additional arguments to 'list'");
+      this.direct(sender, all, "expected additional arguments to 'list'");
       return;
     }
     
@@ -575,20 +607,20 @@ exports.Server = Class.extend({
     var args = message.substr(type.length + 1);
 
     if(type == "admin" || type == "admins") {
-      this.command_list_admins(from, to, args);
+      this.command_list_admins(sender, all, args);
     } else if(type == "ignore" || type == "ignored") {
-      this.command_list_ignored(from, to, args);
+      this.command_list_ignored(sender, all, args);
     } else if(type == "channel" || type == "channels") {
-      this.command_list_channels(from, to, args);
+      this.command_list_channels(sender, all, args);
     } else {
-      this.notice(from, "expected one of [admins, ignored, channels]");
+      this.direct(sender, all, "expected one of [admins, ignored, channels]");
     }
 
   },
 
-  command_add: function(from, to, message) {
+  command_add: function(sender, all, message) {
     if(!message) {
-      this.notice(from, "expected additional arguments to 'add'");
+      this.direct(sender, all, "expected additional arguments to 'add'");
       return;
     }
     
@@ -596,20 +628,20 @@ exports.Server = Class.extend({
     var args = message.substr(type.length + 1);
 
     if(type == "admin") {
-      this.command_add_admin(from, to, args);
+      this.command_add_admin(sender, all, args);
     } else if(type == "ignore") {
-      this.command_add_ignore(from, to, args);
+      this.command_add_ignore(sender, all, args);
     } else if(type == "channel") {
-      this.command_add_channel(from, to, args);
+      this.command_add_channel(sender, all, args);
     } else {
-      this.notice(from, "expected one of [admin, ignore, channel]");
+      this.direct(sender, all, "expected one of [admin, ignore, channel]");
     }
 
   },
 
-  command_remove: function(from, to, message) {
+  command_remove: function(sender, all, message) {
     if(!message) {
-      this.notice(from, "expected additional arguments to 'remove'");
+      this.direct(sender, all, "expected additional arguments to 'remove'");
       return;
     }
     
@@ -617,27 +649,27 @@ exports.Server = Class.extend({
     var args = message.substr(type.length + 1);
 
     if(type == "admin") {
-      this.command_remove_admin(from, to, args);
+      this.command_remove_admin(sender, all, args);
     } else if(type == "ignore") {
-      this.command_remove_ignore(from, to, args);
+      this.command_remove_ignore(sender, all, args);
     } else if(type == "channel") {
-      this.command_remove_channel(from, to, args);
+      this.command_remove_channel(sender, all, args);
     } else {
-      this.notice(from, "expected one of [admin, ignore, channel]");
+      this.direct(sender, all, "expected one of [admin, ignore, channel]");
     }
 
   },
 
-  command_mode: function(from, to, message) {
+  command_mode: function(sender, all, message) {
     if(!message) {
-      this.notice(from, "expected two arguments to 'mode'");
+      this.direct(sender, all, "expected two arguments to 'mode'");
       return;
     }
     
     var args = message.toLowerCase().split(/\s+/);
 
     if(args.length != 1 && args.length != 2) {
-      this.notice(from, "expected one or two arguments to 'mode'");
+      this.direct(sender, all, "expected one or two arguments to 'mode'");
       return;
     }
 
@@ -653,7 +685,7 @@ exports.Server = Class.extend({
                 args[1] == "disabled") {
         value = false;
       } else {
-        this.notice(from, "expected second argument to be 'true' or 'false'");
+        this.direct(sender, all, "expected second argument to be 'true' or 'false'");
         return;
       }
     }
@@ -661,73 +693,80 @@ exports.Server = Class.extend({
     var mode = args[0];
 
     if(this.is_valid_mode(mode)) {
-      var old_mode = this.mode_enabled(mode);
-      this.set_mode(mode, value);
-      this.notice(from, "'" + mode + "' (was " + old_mode + ") has been set to " + this.mode_enabled(mode));
+      var old_value = this.mode_enabled(mode);
+      if(old_value == value) {
+        this.direct(sender, all, "'" + mode + "' is already " + old_value);
+      } else {
+        this.set_mode(mode, value);
+        this.direct(sender, all, "'" + mode + "' is now " + this.mode_enabled(mode));
+      }
     } else {
-      this.notice(from, "invalid mode '" + mode + "'");
+      this.direct(sender, all, "invalid mode '" + mode + "'");
       return;
     }
 
   },
 
-  command_define: function(from, to, message) {
+  command_define: function(sender, all, message) {
     if(!message) {
-      this.notice(from, "expected acronym(s)");
+      this.direct(sender, all, "expected acronym(s)");
       return;
     }
     
     var acronyms = nlp.split_acronyms(message.toLowerCase());
 
-    this.print_acronyms(acronyms, to, true, true);
+    this.print_acronyms(acronyms, all, true, true);
 
   },
 
-  command: function(from, to, command, message) {
+  command: function(sender, all, command, message) {
     
     if(command == "quit" || command == "disconnect" || command == "leave") {
-      this.command_quit(from, to, message);
+      this.command_quit(sender, all, message);
     } else if(command == "restart") {
-      this.command_restart(from, to, message);
+      this.command_restart(sender, all, message);
       
     } else if(command == "define") {
-      this.command_define(from, to, message);
+      this.command_define(sender, all, message);
       
     } else if(command == "list") {
-      this.command_list(from, to, message);
+      this.command_list(sender, all, message);
+      
+    } else if(command == "admin") {
+      this.command_admin(sender, all, message);
       
     } else if(command == "admins") {
-      this.command_list_admins(from, to, message);
+      this.command_list_admins(sender, all, message);
       
     } else if(command == "channels") {
-      this.command_list_channels(from, to, message);
+      this.command_list_channels(sender, all, message);
       
     } else if(command == "channel") {
-      this.command_channel(from, to, message);
+      this.command_channel(sender, all, message);
       
     } else if(command == "add") {
-      this.command_add(from, to, message);
+      this.command_add(sender, all, message);
     } else if(command == "remove") {
-      this.command_remove(from, to, message);
+      this.command_remove(sender, all, message);
       
     } else if(command == "ignore") {
-      this.command_add_ignore(from, to, message);
+      this.command_add_ignore(sender, all, message);
     } else if(command == "unignore") {
-      this.command_remove_ignore(from, to, message);
+      this.command_remove_ignore(sender, all, message);
       
     } else if(command == "join") {
-      this.command_add_channel(from, to, message);
+      this.command_add_channel(sender, all, message);
     } else if(command == "part") {
-      this.command_remove_channel(from, to, message);
+      this.command_remove_channel(sender, all, message);
       
     } else if(command == "mode") {
-      this.command_mode(from, to, message);
+      this.command_mode(sender, all, message);
     } else {
-      this.notice(from, "unknown command '" + command + "'");
+      this.notice(sender, "unknown command '" + command + "'");
     }
   },
         
-  parse_command: function(from, to, message) {
+  parse_command: function(sender, all, message) {
 
     if(!message) {
       this.notice(from, "expected a command");
@@ -736,7 +775,7 @@ exports.Server = Class.extend({
 
     var command = message.split(" ")[0].toLowerCase();
 
-    this.command(from, to, command, message.substr(command.length + 1));
+    this.command(sender, all, command, message.substr(command.length + 1));
 
   },
   
@@ -747,6 +786,9 @@ exports.Server = Class.extend({
 
     if(this.user_is(from, "ignored"))
       return;
+
+    var sender = from;
+    var all    = to;
 
     var server = this;
     
@@ -771,13 +813,13 @@ exports.Server = Class.extend({
     if(type == "natural") {
       if(this.mode_is("silent"))
         return;
-      this.parse_natural(from, to, message);
+      this.parse_natural(sender, all, message);
     }
 
     if(direct || type == "command") {
       if(direct)
-        to = from;
-      this.parse_command(from, to, message);
+        all = sender;
+      this.parse_command(sender, all, message);
     }
 
   }

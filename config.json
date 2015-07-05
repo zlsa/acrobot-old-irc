@@ -13,6 +13,12 @@
     },
     "acrobotic_2": {
       "ignored": true
+    },
+    "EchoLogic": {
+      "admin": true
+    },
+    "lsa": {
+      "ignored": true
     }
   },
   "mode": {
