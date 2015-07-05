@@ -139,7 +139,12 @@ exports.Acronyms = Class.extend({
 
   // get/set
 
-  get: function(acronym, callback) {
+  get: function(acronym, weight, callback) {
+
+    if(callback == undefined) {
+      callback = weight;
+      weight = 1;
+    }
 
     acronym = exports.clean(acronym);
 

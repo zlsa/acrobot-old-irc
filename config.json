@@ -11,13 +11,7 @@
     "zlsa": {
       "admin": true
     },
-    "zlsa_": {
-      "admin": true
-    },
-    "EchoLogic": {
-      "ignored": false
-    },
-    "acrobotic_2test": {
+    "acrobotic_2": {
       "ignored": true
     }
   },
