@@ -9,6 +9,10 @@ IRC acronym and factoid bot
 
 rndnum123 for converting the wiki markup to JSON
 
+# usage
+
+Just ask "what is <acronym>" and it will respond.
+
 # license
 
 Copyright (c) 2015 acrobot contributors
