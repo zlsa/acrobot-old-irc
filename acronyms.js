@@ -5,12 +5,15 @@ var util     = require("./util");
 
 // removes extra characters and lowercases; i.e. "F-9!" becomes "f9"
 exports.clean = function(acronym) {
+  if(!acronym) return acronym;
   return acronym.replace(/\W/g, "").toLowerCase();
 };
 
 exports.acronym_compare = function(a, b) {
   if(a.weight < b.weight) return -1;
   if(a.weight > b.weight) return  1;
+  if(a.acronym < b.acronym) return -1;
+  if(a.acronym > b.acronym) return 1;
   return 0;
 };
 
@@ -126,6 +129,23 @@ exports.Acronym = Class.extend({
   get_description: function() {
     return this.description;
   },
+
+  get_human_readable: function(description) {
+    var s = "";
+    
+    s += this.get_acronym() + ": ";
+    
+    if(this.get_initials()) {
+      s += this.get_initials();
+    }
+    
+    if(description && this.get_description()) {
+      if(this.get_initials()) s += ". ";
+      s += this.get_description();
+    }
+
+    return s;
+  }
   
 });
 
@@ -152,7 +172,7 @@ exports.Acronyms = Class.extend({
     
     for(var i=0; i<this.acronyms.length; i++) {
       var a = this.acronyms[i];
-      if(a.acronyms.indexOf(acronym) >= 0) {
+      if(a.acronyms.indexOf(acronym) >= 0 || acronym == null) {
         matching.push(a);
       }
     }

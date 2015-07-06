@@ -2,6 +2,16 @@
   "acronyms": [
     {
       "acronyms": [
+        "ftss"
+      ],
+      "acronym": "FTSS",
+      "initials": "Full Thrust Single Stick",
+      "description": "The term for the uprated Falcon 9 v1.1 with densified cryogenics, a stretched second stage, and more powerful engines",
+      "weight": 0.4,
+      "source": "none"
+    },
+    {
+      "acronyms": [
         "aos"
       ],
       "acronym": "AOS",

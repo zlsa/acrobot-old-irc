@@ -121,6 +121,8 @@ exports.Server = Class.extend({
         userName: this.irc.nick,
         realName: "Acrobot",
         autoConnect: false,
+        floodProtection: true,
+        floodProtectionDelay: 250,
       });
 
       this.bind_irc_events();
@@ -300,19 +302,7 @@ exports.Server = Class.extend({
         if(matches.length >= 1) {
           var reply = [];
           for(var i=0; i<matches.length; i++) {
-            var a = matches[i];
-
-            var s = "";
-            s += a.get_acronym() + ": ";
-            if(a.get_initials()) {
-              s += a.get_initials();
-            }
-            if(description && a.get_description()) {
-              if(a.get_initials()) s += ". ";
-              s += a.get_description();
-            }
-
-            reply.push(s);
+            reply.push(matches[i].get_human_readable());
           }
           
           server.say(to, reply.join(", "));
@@ -364,6 +354,24 @@ exports.Server = Class.extend({
       process.exit();
     else
       this.direct(sender, all, "you're not an admin!");
+  },
+
+  // list acronyms
+
+  command_list_acronyms: function(sender, all, message) {
+    var server = this;
+    var acronyms = this.acronyms.get(null, function(err, matches) {
+      if(matches.length == 0) {
+        server.all(all, "no acronyms");
+      } else {
+        server.all(all, "PM'ing you list!");
+        
+        for(var i=0; i<matches.length; i++) {
+          server.direct(sender, all, matches[i].get_human_readable());
+        }
+        
+      }
+    });
   },
 
   // USER FUNCTIONS (ADMIN)
@@ -614,6 +622,8 @@ exports.Server = Class.extend({
       this.command_list_ignored(sender, all, args);
     } else if(type == "channel" || type == "channels") {
       this.command_list_channels(sender, all, args);
+    } else if(type == "acronym" || type == "acronyms") {
+      this.command_list_acronyms(sender, all, args);
     } else {
       this.direct(sender, all, "expected one of [admins, ignored, channels]");
     }
