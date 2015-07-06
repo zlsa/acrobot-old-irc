@@ -122,7 +122,7 @@ exports.Server = Class.extend({
         realName: "Acrobot",
         autoConnect: false,
         floodProtection: true,
-        floodProtectionDelay: 350,
+        floodProtectionDelay: 500,
       });
 
       this.bind_irc_events();
@@ -277,8 +277,7 @@ exports.Server = Class.extend({
     return users;
   },
 
-  print_acronyms: function(acronyms, to, description, always) {
-    if(description == undefined) description = true;
+  print_acronyms: function(acronyms, to, always) {
     
     var server = this;
 
@@ -297,8 +296,8 @@ exports.Server = Class.extend({
         get = this.acronyms.get_refresh;
       }
     
-      get.call(this.acronyms, acronym, function(err, matches) {
-        
+      get.call(this.acronyms, acronym, function(err, matches, a) {
+
         if(matches.length >= 1) {
           var reply = [];
           for(var i=0; i<matches.length; i++) {
@@ -307,7 +306,7 @@ exports.Server = Class.extend({
           
           server.say(to, nlp.andify(reply));
         } else if(always) {
-          server.say(to, "could not find an acronym matching '" + acronym + "'");
+          server.say(to, "could not find an acronym matching '" + a + "'");
         }
         
       });
@@ -685,7 +684,14 @@ exports.Server = Class.extend({
       return;
     }
 
-    var value = true;
+    var mode = args[0];
+
+    if(!this.is_valid_mode(mode)) {
+      this.direct(sender, all, "invalid mode '" + mode + "'");
+      return;
+    }
+
+    var value = !this.mode_enabled(mode);
 
     if(args.length == 2) {
       if(args[1] == "true"    ||
@@ -702,24 +708,17 @@ exports.Server = Class.extend({
       }
     }
 
-    var mode = args[0];
-
-    if(this.is_valid_mode(mode)) {
-      var old_value = this.mode_enabled(mode);
-      if(old_value == value) {
-        this.direct(sender, all, "'" + mode + "' is already " + old_value);
-      } else {
-        this.set_mode(mode, value);
-        this.direct(sender, all, "'" + mode + "' is now " + this.mode_enabled(mode));
-      }
+    var old_value = this.mode_enabled(mode);
+    if(old_value == value) {
+      this.direct(sender, all, "'" + mode + "' is already " + old_value);
     } else {
-      this.direct(sender, all, "invalid mode '" + mode + "'");
-      return;
+      this.set_mode(mode, value);
+      this.direct(sender, all, "'" + mode + "' is now " + this.mode_enabled(mode));
     }
-
   },
 
   command_define: function(sender, all, message) {
+    
     if(!message) {
       this.direct(sender, all, "expected acronym(s)");
       return;
@@ -727,7 +726,9 @@ exports.Server = Class.extend({
     
     var acronyms = nlp.split_acronyms(message.toLowerCase());
 
-    this.print_acronyms(acronyms, all, true, true);
+    console.log(acronyms);
+
+    this.print_acronyms(acronyms, all, true);
 
   },
 
@@ -746,6 +747,42 @@ exports.Server = Class.extend({
     var msg = message.substr(channel.length + 1);
 
     this.say(channel, msg);
+
+  },
+
+  // HELP
+
+  command_help: function(sender, all, message) {
+    var command = message.split(" ")[0].toLowerCase() || null;
+
+    var server = this;
+
+    function l(m) {
+      server.direct(sender, all, m);
+    };
+    
+    if(true) {
+      l(this.irc.nick + " commands:");
+      l("quit/disconnect:           disconnect from the server");
+                                      
+      l("channels:                  lists current channels");
+      l("join <channel>:            joins <channel>");
+      l("part <channel>:            parts the current channel if <channel> is not given");
+                                  
+      l("ignore <nick>:             ignores <nick>, includes all commands");
+      l("unignore <nick>:           unignores <nick>, includes all commands");
+                                      
+      l("silence:                   disable all messages");
+      l("unsilence:                 reenables messages");
+                                      
+      l("mode <mode> <value>:       enables or disables a mode; toggles if <value> is missing");
+
+      l("admin [add|remove] <nick>: adds or removes an admin");
+
+      l("define <acronym>:          define an acronym");
+    } else {
+      this.direct(sender, all, "no help for '" + command + "'");
+    }
 
   },
 
@@ -800,6 +837,9 @@ exports.Server = Class.extend({
       
     } else if(command == "mode") {
       this.command_mode(sender, all, message);
+      
+    } else if(command == "help") {
+      this.command_help(sender, all, message);
       
     } else {
       this.notice(sender, "unknown command '" + command + "'");

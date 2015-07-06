@@ -68,6 +68,8 @@ exports.Acronym = Class.extend({
     this.description = o.description;
     this.weight      = o.weight;
 
+    return;
+    
     if(!this.acronym) console.log("empty acronym");
     if(!this.initials) console.log(this.acronym + " empty initials");
     if(!this.description) console.log(this.acronym + " empty description");
@@ -180,7 +182,7 @@ exports.Acronyms = Class.extend({
     matching.sort(exports.acronym_compare);
 
     if(callback) {
-      callback(null, matching);
+      callback(null, matching, acronym);
     }
     
   },
@@ -215,8 +217,8 @@ exports.JSONAcronyms = exports.Acronyms.extend({
     var acronyms = this;
 
     this.restore(function() {
-      acronyms.get.call(acronyms, acronym, function(err, matches) {
-        if(callback) callback(err, matches);
+      acronyms.get.call(acronyms, acronym, function() {
+        if(callback) callback.apply(this, arguments);
       });
     });
 

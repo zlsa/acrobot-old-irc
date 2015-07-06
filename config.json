@@ -16,6 +16,15 @@
     },
     "EchoLogic": {
       "admin": true
+    },
+    "rndnum123_": {
+      "admin": true
+    },
+    "NickNotInList": {
+      "admin": true
+    },
+    "kjasd": {
+      "admin": true
     }
   },
   "mode": {
