@@ -6,7 +6,7 @@
       ],
       "acronym": "FTSS",
       "initials": "Full Thrust Single Stick",
-      "description": "The term for the uprated Falcon 9 v1.1 with densified cryogenics, a stretched second stage, and more powerful engines",
+      "description": "the uprated Falcon 9 v1.1 with densified cryogenics, a stretched second stage, and more powerful engines",
       "weight": 0.4,
       "source": "none"
     },
@@ -16,7 +16,7 @@
       ],
       "acronym": "AOS",
       "initials": "Acquisition of Signal",
-      "description": "A phrase used during launch when communication with the vehicle is re-established after Loss of Signal or when the vehicle rises above the horizon",
+      "description": "a phrase used during launch when communication with the vehicle is re-established after Loss of Signal or when the vehicle rises above the horizon",
       "weight": 0.4,
       "source": "/r/spacex wiki"
     },
@@ -26,7 +26,7 @@
       ],
       "acronym": "ACS",
       "initials": "Attitude Control System",
-      "description": "Synonymous with Reaction Control System",
+      "description": "synonymous with Reaction Control System",
       "weight": 0.6,
       "source": "/r/spacex wiki"
     },
@@ -46,7 +46,7 @@
       ],
       "acronym": "BEAM",
       "initials": "Bigelow Expandable Activities Module",
-      "description": "An inflatable module designed by Bigelow Aerospace that is scheduled to be brought up to the iss aboard crs-8",
+      "description": "an inflatable module designed by Bigelow Aerospace that is scheduled to be brought up to the iss aboard crs-8",
       "weight": 0.6,
       "source": "/r/spacex wiki"
     },
@@ -56,7 +56,7 @@
       ],
       "acronym": "BFR",
       "initials": "Big Falcon Rocket",
-      "description": "A generic term for the next SpaceX rocket, which will be larger than Falcon Heavy; see also MCT",
+      "description": "a generic term for the next SpaceX rocket, which will be larger than Falcon Heavy; see also MCT",
       "weight": 0.8,
       "source": "/r/spacex wiki"
     },
@@ -66,7 +66,7 @@
       ],
       "acronym": "BO",
       "initials": "Blue Origin",
-      "description": "A SpaceX competitor that is developing manned, reusable suborbital and orbital launch vehicles",
+      "description": "a SpaceX competitor that is developing manned, reusable suborbital and orbital launch vehicles",
       "weight": 0.6,
       "source": "/r/spacex wiki"
     },
@@ -76,7 +76,7 @@
       ],
       "acronym": "C3",
       "initials": "Characteristic Energy",
-      "description": "A measure of escape velocity (< 1 = no escape, 1 = escape with no further velocity, > 1 = escape with increasing velocity)",
+      "description": "a measure of escape velocity (< 1 = no escape, 1 = escape with no further velocity, > 1 = escape with increasing velocity)",
       "weight": 0.2,
       "source": "/r/spacex wiki"
     },
@@ -86,7 +86,7 @@
       ],
       "acronym": "CBM",
       "initials": "Common Berthing Mechanism",
-      "description": "The berthing mechanism used to attach the cargo Dragon to the ISS",
+      "description": "the berthing mechanism used to attach the cargo Dragon to the ISS",
       "weight": 0.6,
       "source": "/r/spacex wiki"
     },
@@ -96,7 +96,7 @@
       ],
       "acronym": "CCAFS",
       "initials": "Cape Canaveral Air Force Station",
-      "description": "The primary launch head of the US Eastern Range",
+      "description": "the primary launch head of the US Eastern Range",
       "weight": 0.4,
       "source": "/r/spacex wiki"
     },
@@ -106,7 +106,7 @@
       ],
       "acronym": "CCDev",
       "initials": "Commercial Crew Development",
-      "description": "A four-phase NASA program to launch astronauts to the ISS with commercially-developed vehicles",
+      "description": "a four-phase NASA program to launch astronauts to the ISS with commercially-developed vehicles",
       "weight": 0.4,
       "source": "/r/spacex wiki"
     },
@@ -116,7 +116,7 @@
       ],
       "acronym": "CCiCAP",
       "initials": "Commercial Crew Integrated Capability",
-      "description": "Phase 3 of the CCDev program, CCiCAP is intended to demonstrate the end-to-end launch capability of commercial launch providers",
+      "description": "phase 3 of the CCDev program, CCiCAP is intended to demonstrate the end-to-end launch capability of commercial launch providers",
       "weight": 0.4,
       "source": "/r/spacex wiki"
     },
@@ -126,7 +126,7 @@
       ],
       "acronym": "CCtCAP",
       "initials": "Commercial Crew Transportation Capability",
-      "description": "Phase 4 of the CCDev program, CCtCAP is intended to demonstrate the crew launch capabilities of commercial launch providers",
+      "description": "phase 4 of the CCDev program, CCtCAP is intended to demonstrate the crew launch capabilities of commercial launch providers",
       "weight": 0.4,
       "source": "/r/spacex wiki"
     },
@@ -146,7 +146,7 @@
       ],
       "acronym": "CRS",
       "initials": "Commercial Resupply Services",
-      "description": "A contract that SpaceX and Orbital Sciences both have with NASA to supply cargo to the International Space Station with cargo",
+      "description": "a contract that SpaceX and Orbital Sciences both have with NASA to supply cargo to the International Space Station with cargo",
       "weight": 0.5,
       "source": "/r/spacex wiki"
     },
@@ -158,7 +158,7 @@
       ],
       "acronym": "dV",
       "initials": "Delta-V",
-      "description": "The amount of 'effort' required to move a spacecraft from one location or orbit to another",
+      "description": "the amount of 'effort' required to move a spacecraft from one location or orbit to another",
       "weight": 0.6,
       "source": "/r/spacex wiki"
     },
@@ -168,7 +168,7 @@
       ],
       "acronym": "EDL",
       "initials": "Entry, Descent and Landing",
-      "description": "The series of controlled maneuvers and pathways used to land an orbiting spacecraft on a planet's surface",
+      "description": "the series of controlled maneuvers and pathways used to land an orbiting spacecraft on a planet's surface",
       "weight": 0.6,
       "source": "/r/spacex wiki"
     },
@@ -178,7 +178,7 @@
       ],
       "acronym": "FRR",
       "initials": "Flight Readiness Review",
-      "description": "A paperwork exercise used to ensure that a rocket is ready to fly",
+      "description": "a paperwork exercise used to ensure that a rocket is ready to fly",
       "weight": 0.3,
       "source": "/r/spacex wiki"
     },
@@ -188,7 +188,7 @@
       ],
       "acronym": "FSS",
       "initials": "Fixed Service Structure",
-      "description": "A structure on the pad at Launch Complex 39A, Cape Canaveral, used for the Space Shuttle program",
+      "description": "a structure on the pad at Launch Complex 39A, Cape Canaveral, used for the Space Shuttle program",
       "weight": 0.4,
       "source": "/r/spacex wiki"
     },
@@ -218,7 +218,7 @@
       ],
       "acronym": "FH",
       "initials": "Falcon Heavy",
-      "description": "A Falcon 9 rocket stack with two more Falcon 9 booster stages on the sides.",
+      "description": "a Falcon 9 rocket stack with two more Falcon 9 booster stages on the sides.",
       "weight": 0.8,
       "source": "/r/spacex wiki"
     },
@@ -228,7 +228,7 @@
       ],
       "acronym": "GSE",
       "initials": "Ground Support Equipment",
-      "description": "Any ground-based equipment used to enable a launch to occur",
+      "description": "any ground-based equipment used to enable a launch to occur",
       "weight": 0.6,
       "source": "/r/spacex wiki"
     },
@@ -238,7 +238,7 @@
       ],
       "acronym": "HIF",
       "initials": "Horizontal Integration Facility",
-      "description": "A building used to assemble a rocket while horizontal",
+      "description": "a building used to assemble a rocket while horizontal",
       "weight": 0.3,
       "source": "/r/spacex wiki"
     },
@@ -248,7 +248,7 @@
       ],
       "acronym": "IIP",
       "initials": "Instantaneous Impact Point",
-      "description": "The point a rocket would land at if all propulsion was terminated at that moment",
+      "description": "the point a rocket would land at if all propulsion was terminated at that moment",
       "weight": 0.5,
       "source": "/r/spacex wiki"
     },
@@ -268,7 +268,7 @@
       ],
       "acronym": "ISRU",
       "initials": "In-situ Resource Utilization",
-      "description": "The mining and processing of the regolith/atmosphere of Mars, Moon, etc, for use as fuel, propellant, or other consumables",
+      "description": "the mining and processing of the regolith/atmosphere of Mars, Moon, etc, for use as fuel, propellant, or other consumables",
       "weight": 0.6,
       "source": "/r/spacex wiki"
     },
@@ -278,7 +278,7 @@
       ],
       "acronym": "ISP",
       "initials": "Specific Impulse",
-      "description": "A measure of the fuel efficiency of a rocket engine",
+      "description": "a measure of the fuel efficiency of a rocket engine",
       "weight": 0.7,
       "source": "/r/spacex wiki"
     },
@@ -288,7 +288,7 @@
       ],
       "acronym": "ISS",
       "initials": "International Space Station",
-      "description": "An internationally run habitable artificial satellite in low Earth orbit",
+      "description": "an internationally run habitable artificial satellite in low Earth orbit",
       "weight": 0.9,
       "source": "/r/spacex wiki"
     },
@@ -298,7 +298,7 @@
       ],
       "acronym": "JRTI",
       "initials": "Just Read The Instructions (Marmac 300)",
-      "description": "The name of SpaceX's now retired Atlantic ASDS; see OCISLY",
+      "description": "the name of SpaceX's now retired Atlantic ASDS; see OCISLY",
       "weight": 0.8,
       "source": "/r/spacex wiki"
     },
@@ -308,7 +308,7 @@
       ],
       "acronym": "JWST",
       "initials": "James Webb Space Telescope",
-      "description": "A NASA space observatory under construction and scheduled to launch in 2018 on the Ariane 5 launch vehicle",
+      "description": "a NASA space observatory under construction and scheduled to launch in 2018 on the Ariane 5 launch vehicle",
       "weight": 0.6,
       "source": "/r/spacex wiki"
     },
@@ -318,7 +318,7 @@
       ],
       "acronym": "KSC",
       "initials": "Kennedy Space Center",
-      "description": "A NASA-run orbital launch center at Cape Canaveral, Florida",
+      "description": "a NASA-run orbital launch center at Cape Canaveral, Florida",
       "weight": 0.7,
       "source": "/r/spacex wiki"
     },
@@ -338,7 +338,7 @@
       ],
       "acronym": "L2",
       "initials": "",
-      "description": "A subscription-based forum within the NASA SpaceFlight community",
+      "description": "a subscription-based forum within the NASA Spaceflight community",
       "weight": 0.6,
       "source": "/r/spacex wiki"
     },
@@ -358,7 +358,7 @@
       ],
       "acronym": "LC-39A",
       "initials": "Launch Complex 39A, Cape Canaveral",
-      "description": "A former shuttle launch site now leased by SpaceX; the debut launch of the Falcon Heavy is expected to be from LC-39A",
+      "description": "a former shuttle launch site now leased by SpaceX; the debut launch of the Falcon Heavy is expected to be from LC-39A",
       "weight": 0.5,
       "source": "/r/spacex wiki"
     },
@@ -368,7 +368,7 @@
       ],
       "acronym": "LOM",
       "initials": "Loss of Mission",
-      "description": "The mission failing irrecoverably, often due to launch vehicle failure",
+      "description": "the mission failing irrecoverably, often due to launch vehicle failure",
       "weight": 0.3,
       "source": "/r/spacex wiki"
     },
@@ -378,7 +378,7 @@
       ],
       "acronym": "LOS",
       "initials": "Loss of Signal",
-      "description": "A phrase used during launch when communication with the vehicle is temporarily lost, such as when the vehicle moves below the horizon",
+      "description": "a phrase used during launch when communication with the vehicle is temporarily lost, such as when the vehicle moves below the horizon",
       "weight": 0.4,
       "source": "/r/spacex wiki"
     },
@@ -388,7 +388,7 @@
       ],
       "acronym": "LOV",
       "initials": "Loss of Vehicle",
-      "description": "A launch vehicle failure",
+      "description": "a launch vehicle failure",
       "weight": 0.3,
       "source": "/r/spacex wiki"
     },
@@ -398,7 +398,7 @@
       ],
       "acronym": "LRR",
       "initials": "Launch (vehicle) Readiness Review",
-      "description": "A prelaunch safety and logistics inspection, used to confirm that the launch vehicle is safe and conformant to the specifications it was built to",
+      "description": "a prelaunch safety and logistics inspection, used to confirm that the launch vehicle is safe and conformant to the specifications it was built to",
       "weight": 0.2,
       "source": "/r/spacex wiki"
     },
@@ -408,7 +408,7 @@
       ],
       "acronym": "MA",
       "initials": "Mission Assurance",
-      "description": "An engineering process used to increase the chance of mission success",
+      "description": "an engineering process used to increase the chance of mission success",
       "weight": 0.2,
       "source": "/r/spacex wiki"
     },
@@ -418,7 +418,7 @@
       ],
       "acronym": "MCT",
       "initials": "Mars Colonial Transporter",
-      "description": "A vehicle planned by SpaceX to transport humans to and from Mars; see also BFR",
+      "description": "a vehicle planned by SpaceX to transport humans to and from Mars; see also BFR",
       "weight": 0.6,
       "source": "/r/spacex wiki"
     },
@@ -428,7 +428,7 @@
       ],
       "acronym": "MECO",
       "initials": "Main Engine Cutoff",
-      "description": "During launch, the ending of the first stage engine burn",
+      "description": "during launch, the ending of the first stage engine burn",
       "weight": 0.5,
       "source": "/r/spacex wiki"
     },
@@ -438,7 +438,7 @@
       ],
       "acronym": "NDS",
       "initials": "NASA Docking System",
-      "description": "A device used to attach the crew Dragon (Dragon 2) to the ISS",
+      "description": "a device used to attach the crew Dragon (Dragon 2) to the ISS",
       "weight": 0.4,
       "source": "/r/spacex wiki"
     },
@@ -448,7 +448,7 @@
       ],
       "acronym": "NET",
       "initials": "No Earlier Than",
-      "description": "Refers to a date that is the absolute earliest time an event, usually a launch, could happen",
+      "description": "refers to a date that is the absolute earliest time an event, usually a launch, could happen",
       "weight": 0.6,
       "source": "/r/spacex wiki"
     },
@@ -459,7 +459,7 @@
       "acronym": "NSF",
       "initials": "NASA SpaceFlight/NASA Spaceflight Forums",
       "url": "http://www.nasaspaceflight.com/",
-      "description": "A website that covers all space-related news; not officially affiliated with NASA",
+      "description": "a website that covers all space-related news; not officially affiliated with NASA",
       "weight": 0.5,
       "source": "/r/spacex wiki"
     },
@@ -479,7 +479,7 @@
       ],
       "acronym": "PIF",
       "initials": "Payload Integration Facility",
-      "description": "A building where the payload is integrated with the payload adapter",
+      "description": "a building where the payload is integrated with the payload adapter",
       "weight": 0.6,
       "source": "/r/spacex wiki"
     },
@@ -489,7 +489,7 @@
       ],
       "acronym": "PICA-X",
       "initials": "Phenolic Impregnated Carbon Ablator-X",
-      "description": "The material used for the head shields of the Dragon capsules.",
+      "description": "the material used for the head shields of the Dragon capsules.",
       "weight": 0.5,
       "source": "/r/spacex wiki"
     },
@@ -499,7 +499,7 @@
       ],
       "acronym": "PMA",
       "initials": "Pressurized Mating Adapter",
-      "description": "A device used on the ISS to convert a CBM port to an NDS port",
+      "description": "a device used on the ISS to convert a CBM port to an NDS port",
       "weight": 0.3,
       "source": "/r/spacex wiki"
     },
@@ -509,7 +509,7 @@
       ],
       "acronym": "PMF",
       "initials": "Propellant Mass Fraction",
-      "description": "The ratio between propellant mass (which is consumed), and vehicle mass (usually not)",
+      "description": "the ratio between propellant mass (which is consumed), and vehicle mass (usually not)",
       "weight": 0.2,
       "source": "/r/spacex wiki"
     },
@@ -519,7 +519,7 @@
       ],
       "acronym": "RCS",
       "initials": "Reaction Control System",
-      "description": "A system that burns fuel or ejects pressurized gas to rotate the vehicle; synonymous with Attitude Control System",
+      "description": "a system that burns fuel or ejects pressurized gas to rotate the vehicle; synonymous with Attitude Control System",
       "weight": 0.9,
       "source": "/r/spacex wiki"
     },
@@ -529,7 +529,7 @@
       ],
       "acronym": "RSS",
       "initials": "Rotating Service Structure",
-      "description": "A structure on the pad at Launch Complex 39A, Cape Canaveral, used for the Space Shuttle",
+      "description": "a structure on the pad at Launch Complex 39A, Cape Canaveral, used for the Space Shuttle",
       "weight": 0.7,
       "source": "/r/spacex wiki"
     },
@@ -539,7 +539,7 @@
       ],
       "acronym": "RUD",
       "initials": "Rapid Unplanned Disassembly",
-      "description": "A colloquial word for catastrophic failure of a vehicle, usually implied to be visually spectacular",
+      "description": "a colloquial word for catastrophic failure of a vehicle, usually implied to be visually spectacular",
       "weight": 0.8,
       "source": "/r/spacex wiki"
     },
@@ -549,7 +549,7 @@
       ],
       "acronym": "RTLS",
       "initials": "Return To Launch Site",
-      "description": "A portion of a launch vehicle returning to the same location from which it launched",
+      "description": "a portion of a launch vehicle returning to the same location from which it launched",
       "weight": 0.5,
       "source": "/r/spacex wiki"
     },
@@ -559,7 +559,7 @@
       ],
       "acronym": "SECO",
       "initials": "Second (stage) Engine CutOff",
-      "description": "During launch, the ending of the second stage engine burn",
+      "description": "during launch, the ending of the second stage engine burn",
       "weight": 0.4,
       "source": "/r/spacex wiki"
     },
@@ -569,7 +569,7 @@
       ],
       "acronym": "SEP",
       "initials": "Solar Electric Propulsion",
-      "description": "Propulsion, typically using ion thrusters, that uses very little propellant and electricity to produce thrust at a very high effiency (ISP)",
+      "description": "propulsion, typically using ion thrusters, that uses very little propellant and electricity to produce thrust at a very high effiency (ISP)",
       "weight": 0.3,
       "source": "/r/spacex wiki"
     },
@@ -609,7 +609,7 @@
       ],
       "acronym": "SPIF",
       "initials": "Spacecraft Processing and Integration Facility",
-      "description": "A building leased to SpaceX to integrate payloads with the payload adapter; was formerly used for the Space Shuttle",
+      "description": "a building leased to SpaceX to integrate payloads with the payload adapter; was formerly used for the Space Shuttle",
       "weight": 0.3,
       "source": "/r/spacex wiki"
     },
@@ -619,7 +619,7 @@
       ],
       "acronym": "SFN",
       "initials": "[Spaceflight Now](http://spaceflightnow.com/)",
-      "description": "A website specialising in spaceflight news",
+      "description": "a website specialising in spaceflight news",
       "weight": 0.5,
       "source": "/r/spacex wiki"
     },
@@ -629,7 +629,7 @@
       ],
       "acronym": "SSME",
       "initials": "Space Shuttle Main Engine",
-      "description": "The three main engines on the Space Shuttle, burning hydrogen and LOX",
+      "description": "the three main engines on the Space Shuttle, burning hydrogen and LOX",
       "weight": 0.6,
       "source": "/r/spacex wiki"
     },
@@ -639,7 +639,7 @@
       ],
       "acronym": "SSTO",
       "initials": "Single Stage To Orbit",
-      "description": "A rocket that can reach Earth orbit without any staging",
+      "description": "a rocket that can reach Earth orbit without any staging",
       "weight": 0.8,
       "source": "/r/spacex wiki"
     },
@@ -650,7 +650,7 @@
       ],
       "acronym": "T/E",
       "initials": "Transporter/Erector",
-      "description": "The structure that takes Falcon from a horizontal to vertical position, and holds the rocket in place on the pad",
+      "description": "the structure that takes Falcon from a horizontal to vertical position, and holds the rocket in place on the pad",
       "weight": 0.6,
       "source": "/r/spacex wiki"
     },
@@ -660,7 +660,7 @@
       ],
       "acronym": "ULA",
       "initials": "United Launch Alliance",
-      "description": "A competitor of SpaceX that produces the Delta and Atlas rocket lines, along with the upcoming Vulcan",
+      "description": "a competitor of SpaceX that produces the Delta and Atlas rocket lines, along with the upcoming Vulcan",
       "weight": 0.9,
       "source": "/r/spacex wiki"
     },
@@ -670,7 +670,7 @@
       ],
       "acronym": "VAB",
       "initials": "Vehicle Assembly Building",
-      "description": "A building in which the separate parts of a launch vehicle and the payload are assembled in preparation for launch",
+      "description": "a building in which the separate parts of a launch vehicle and the payload are assembled in preparation for launch",
       "weight": 0.8,
       "source": "/r/spacex wiki"
     },
@@ -680,7 +680,7 @@
       ],
       "acronym": "VAFB",
       "initials": "Vandenberg Air Force Base, California",
-      "description": "The site of a SpaceX launch pad that is used for polar and retrograde-LEO flights",
+      "description": "the site of a SpaceX launch pad that is used for polar and retrograde-LEO flights",
       "weight": 0.6,
       "source": "/r/spacex wiki"
     },
@@ -690,7 +690,7 @@
       ],
       "acronym": "VV",
       "initials": "Visiting Vehicle",
-      "description": "A term for any vehicle that visits the ISS",
+      "description": "a term for any vehicle that visits the ISS",
       "weight": 0.3,
       "source": "/r/spacex wiki"
     },
@@ -700,7 +700,7 @@
       ],
       "acronym": "WDR",
       "initials": "Wet Dress Rehearsal",
-      "description": "A procedure that involves the loading of propellants, and countdown to launch but without any actual firing of engines, so as to check out systems prior to the actual launch day",
+      "description": "a procedure that involves the loading of propellants and a countdown to launch but without any actual firing of engines; used to check out systems prior to the actual launch day",
       "weight": 0.2,
       "source": "/r/spacex wiki"
     },
@@ -710,7 +710,7 @@
       ],
       "acronym": "BEO",
       "initials": "Beyond Earth Orbit",
-      "description": "Any location or orbit outside of the Earth's gravitational influence",
+      "description": "any location or orbit outside of the Earth's gravitational influence",
       "weight": 0.5,
       "source": "/r/spacex wiki"
     },
@@ -720,7 +720,7 @@
       ],
       "acronym": "GEO",
       "initials": "Geostationary Orbit",
-      "description": "A circular geocentric orbit along the equator at 35,786 km altitude, with an orbital period of exactly 24 hours",
+      "description": "a circular geocentric orbit along the equator at 35,786 km altitude, with an orbital period of exactly 24 hours",
       "weight": 0.5,
       "source": "/r/spacex wiki"
     },
@@ -730,7 +730,7 @@
       ],
       "acronym": "GTO",
       "initials": "Geostationary Transfer Orbit",
-      "description": "A highly elliptical geocentric orbit with perigee in LEO and apogee at or above GEO",
+      "description": "a highly elliptical geocentric orbit with perigee in LEO and apogee at or above GEO",
       "weight": 0.5,
       "source": "/r/spacex wiki"
     },
@@ -740,7 +740,7 @@
       ],
       "acronym": "SSO",
       "initials": "Supersynchronous Orbit",
-      "description": "A highly elliptical orbit that has an orbital period longer than a day of the planet it's orbiting",
+      "description": "a highly elliptical orbit that has an orbital period longer than a day of the planet it's orbiting",
       "weight": 0.5,
       "source": "wikipedia"
     },
@@ -750,7 +750,7 @@
       ],
       "acronym": "SSTO",
       "initials": "Supersynchronous Transfer Orbit",
-      "description": "A supersynchronous orbit that can be adjusted to GEO with very little fuel",
+      "description": "a supersynchronous orbit that can be adjusted to GEO with very little fuel",
       "weight": 0.5,
       "source": "wikipedia"
     },
@@ -760,7 +760,7 @@
       ],
       "acronym": "LLO",
       "initials": "Low Lunar Orbit",
-      "description": "A stable orbit around the moon",
+      "description": "a low orbit around the moon",
       "weight": 0.5,
       "source": "wikipedia"
     },
@@ -770,7 +770,7 @@
       ],
       "acronym": "LMO",
       "initials": "Low Martian Orbit",
-      "description": "A stable orbit around Mars",
+      "description": "a low orbit around Mars",
       "weight": 0.5,
       "source": "wikipedia"
     },
@@ -780,7 +780,7 @@
       ],
       "acronym": "HEO",
       "initials": "High Earth Orbit",
-      "description": "A geocentric orbit with an altitude above 35,786 km",
+      "description": "a geocentric orbit with an altitude above 35,786 km",
       "weight": 0.4,
       "source": "/r/spacex wiki"
     },
@@ -790,7 +790,7 @@
       ],
       "acronym": "LEO",
       "initials": "Low Earth Orbit",
-      "description": "A geocentric orbit with an altitude under 2,000 km",
+      "description": "a geocentric orbit with an altitude under 2,000 km",
       "weight": 0.6,
       "source": "/r/spacex wiki"
     },
@@ -800,7 +800,7 @@
       ],
       "acronym": "LOI",
       "initials": "Lunar Orbit Insertion",
-      "description": "A maneuver performed during Lunar fly-by which places a spacecraft into Lunar orbit",
+      "description": "a maneuver performed during Lunar fly-by which places a spacecraft into Lunar orbit",
       "weight": 0.4,
       "source": "/r/spacex wiki"
     },
@@ -810,7 +810,7 @@
       ],
       "acronym": "MEO",
       "initials": "Medium Earth Orbit",
-      "description": "A geocentric orbit with an altitude between 2,000 km and 35,786 km",
+      "description": "a geocentric orbit with an altitude between 2,000 km and 35,786 km",
       "weight": 0.4,
       "source": "/r/spacex wiki"
     },
@@ -820,7 +820,7 @@
       ],
       "acronym": "MOI",
       "initials": "Mars Orbit Insertion",
-      "description": "A manoeuvre performed during Mars fly-by which places a spacecraft into an aerocentric orbit",
+      "description": "a manoeuvre performed during Mars fly-by which places a spacecraft into an aerocentric orbit",
       "weight": 0.3,
       "source": "/r/spacex wiki"
     },
@@ -830,7 +830,7 @@
       ],
       "acronym": "SO",
       "initials": "Suborbital",
-      "description": "A flight trajectory with enough kinetic energy to reach space, but not enough energy to reach orbit",
+      "description": "a flight trajectory with enough kinetic energy to reach space, but not enough energy to reach orbit",
       "weight": 0.3,
       "source": "/r/spacex wiki"
     },
@@ -840,7 +840,7 @@
       ],
       "acronym": "TLI",
       "initials": "Trans-Lunar Injection",
-      "description": "A manoeuvre performed in geocentric orbit which puts an object on a trajectory towards the moon",
+      "description": "a maneuver performed in geocentric orbit which puts an object on a trajectory towards the moon",
       "weight": 0.5,
       "source": "/r/spacex wiki"
     },
@@ -850,7 +850,7 @@
       ],
       "acronym": "TMI",
       "initials": "Trans-Mars Injection",
-      "description": "A manoeuvre performed in geocentric orbit which puts an object on a Mars-intercepting heliocentric orbit",
+      "description": "a maneuver performed in geocentric orbit which puts an object on a Mars-intercepting heliocentric orbit",
       "weight": 0.5,
       "source": "/r/spacex wiki"
     },
@@ -860,7 +860,7 @@
       ],
       "acronym": "CH4",
       "initials": "Methane",
-      "description": "A simple hydrocarbon used as a cryogenic fuel",
+      "description": "a simple hydrocarbon used as a cryogenic fuel",
       "weight": 0.5,
       "source": "/r/spacex wiki"
     },
@@ -870,7 +870,7 @@
       ],
       "acronym": "LH2",
       "initials": "Liquid Hydrogen (H2)",
-      "description": "A very chemically simple cryogenic fuel",
+      "description": "a very chemically simple cryogenic fuel",
       "weight": 0.5,
       "source": "/r/spacex wiki"
     },
@@ -880,7 +880,7 @@
       ],
       "acronym": "LNG",
       "initials": "Liquid Natural Gas",
-      "description": "A cryogenic mixture of simple hydrocarbons, usually 80-99% methane",
+      "description": "a cryogenic mixture of simple hydrocarbons, usually 80-99% methane",
       "weight": 0.7,
       "source": "/r/spacex wiki"
     },
@@ -890,7 +890,7 @@
       ],
       "acronym": "LOX",
       "initials": "Liquid Oxygen",
-      "description": "A commonly used cryogenic oxidiser (used in Falcon series of vehicles as well as the Space Shuttle and many others)",
+      "description": "a commonly used cryogenic oxidiser (used in Falcon series of vehicles as well as the Space Shuttle and many others)",
       "weight": 0.5,
       "source": "/r/spacex wiki"
     },
@@ -900,7 +900,7 @@
       ],
       "acronym": "MMH",
       "initials": "Monomethyl Hydrazine",
-      "description": "A highly toxic fuel that is liquid under standard conditions (used in the Dragon)",
+      "description": "a highly toxic fuel that is liquid under standard conditions (used in the Dragon)",
       "weight": 0.4,
       "source": "/r/spacex wiki"
     },
@@ -910,7 +910,7 @@
       ],
       "acronym": "N2O4",
       "initials": "Dinitrogen Tetroxide, aka DNTO",
-      "description": "A highly toxic oxidiser that is liquid under standard conditions (used in the Dragon)",
+      "description": "a highly toxic oxidiser that is liquid under standard conditions (used in the Dragon)",
       "weight": 0.4,
       "source": "/r/spacex wiki"
     },
@@ -920,7 +920,7 @@
       ],
       "acronym": "RP-1",
       "initials": "Rocket Propellant-1",
-      "description": "A complex hydrocarbon (kerosene) used as a combustible fuel (used in the Falcon series of vehicles)",
+      "description": "a complex hydrocarbon (kerosene) used as a combustible fuel (used in the Falcon series of vehicles)",
       "weight": 0.4,
       "source": "/r/spacex wiki"
     },
@@ -950,7 +950,7 @@
       ],
       "acronym": "CC",
       "initials": "Commercial Crew",
-      "description": "Refers to commercial companies launching crewed vehicles, typically to the ISS",
+      "description": "refers to commercial companies launching crewed vehicles, typically to the ISS",
       "weight": 0.4,
       "source": "/r/spacex wiki"
     },
@@ -970,7 +970,7 @@
       ],
       "acronym": "DC",
       "initials": "Dragon Controller",
-      "description": "The controller of the Dragon capsule",
+      "description": "the controller of the Dragon capsule",
       "weight": 0.2,
       "source": "/r/spacex wiki"
     },
@@ -990,7 +990,7 @@
       ],
       "acronym": "FS",
       "initials": "Flight Software",
-      "description": "The software that controls the vehicle",
+      "description": "the software that controls the vehicle",
       "weight": 0.3,
       "source": "/r/spacex wiki"
     },
@@ -1010,7 +1010,7 @@
       ],
       "acronym": "FTS",
       "initials": "Flight Termination System",
-      "description": "When a rocket departs from its planned trajectory, the flight termination system is activated to destroy the launch vehicle and prevent damage to people or property",
+      "description": "when a rocket departs from its planned trajectory, the flight termination system is activated to destroy the launch vehicle and prevent damage to people or property",
       "weight": 0.4,
       "source": "/r/spacex wiki"
     },
@@ -1030,7 +1030,7 @@
       ],
       "acronym": "GNC",
       "initials": "Guidance, Navigation, & Control",
-      "description": "The systems in a vehicle that control its trajectory",
+      "description": "the systems in a vehicle that control its trajectory",
       "weight": 0.5,
       "source": "/r/spacex wiki"
     },
@@ -1050,7 +1050,7 @@
       ],
       "acronym": "LD",
       "initials": "Launch Director",
-      "description": "The overall director of launch activities",
+      "description": "the overall director of launch activities",
       "weight": 0.6,
       "source": "/r/spacex wiki"
     },
@@ -1170,7 +1170,7 @@
       ],
       "acronym": "IDA",
       "initials": "International Docking Adapter",
-      "description": "A spacecraft docking system adapter to convert from APAS-95 to the IDSS",
+      "description": "a spacecraft docking system adapter to convert from APAS-95 to the IDSS",
       "weight": 0.4,
       "source": "wikipedia"
     },
@@ -1181,7 +1181,7 @@
       ],
       "acronym": "APAS-95",
       "initials": "Androgynous Peripheral Attach System",
-      "description": "A spacecraft docking system designed by Russia and used by the Space Shuttle",
+      "description": "a spacecraft docking system designed by Russia and used by the Space Shuttle",
       "weight": 0.4,
       "source": "wikipedia"
     },
@@ -1191,7 +1191,7 @@
       ],
       "acronym": "IDSS",
       "initials": "International Docking System Standard",
-      "description": "A spacecraft docking system that will be used in the future on all spacecraft to ensure interchangeability and hahaha lol jk",
+      "description": "a spacecraft docking system that will be used in the future on all spacecraft to ensure interchangeability and hahaha lol jk",
       "weight": 0.4,
       "source": "wikipedia"
     },
@@ -1201,8 +1201,28 @@
       ],
       "acronym": "NASA",
       "initials": "National Aeronautics and Space Administration",
-      "description": "The United States government agency responsible for the US civilian space program as well as aeronautics and aerospace research",
+      "description": "the United States government agency responsible for the US civilian space program as well as aeronautics and aerospace research",
       "weight": 0.6,
+      "source": "wikipedia"
+    },
+    {
+      "acronyms": [
+        "rtf"
+      ],
+      "acronym": "RTF",
+      "initials": "Return to Flight",
+      "description": "the first launch of a vehicle after a failure",
+      "weight": 0.4,
+      "source": "wikipedia"
+    },
+    {
+      "acronyms": [
+        "em"
+      ],
+      "acronym": "EM",
+      "initials": "Elon Musk",
+      "description": "the founder and CEO of SpaceX",
+      "weight": 0.4,
       "source": "wikipedia"
     },
     {
@@ -1211,9 +1231,9 @@
       ],
       "acronym": "SJ",
       "initials": "Steve Jurvetson",
-      "description": "An American venture capitalist and partner at DFJ",
+      "description": "an American venture capitalist and partner at DFJ",
       "weight": 0.3,
-      "source": "/r/spacex wiki"
+      "source": "wikipedia"
     },
     {
       "acronyms": [
@@ -1221,9 +1241,9 @@
       ],
       "acronym": "DFJ",
       "initials": "Draper Fisher Jurvetson",
-      "description": "An American venture capital firm, known for investing in Tesla Motors and SpaceX",
+      "description": "an American venture capital firm, known for investing in Tesla Motors and SpaceX",
       "weight": 0.3,
-      "source": "/r/spacex wiki"
+      "source": "wikipedia"
     }
   ]
 }

@@ -122,7 +122,7 @@ exports.Server = Class.extend({
         realName: "Acrobot",
         autoConnect: false,
         floodProtection: true,
-        floodProtectionDelay: 250,
+        floodProtectionDelay: 350,
       });
 
       this.bind_irc_events();
@@ -305,7 +305,7 @@ exports.Server = Class.extend({
             reply.push(matches[i].get_human_readable());
           }
           
-          server.say(to, reply.join(", "));
+          server.say(to, nlp.andify(reply));
         } else if(always) {
           server.say(to, "could not find an acronym matching '" + acronym + "'");
         }

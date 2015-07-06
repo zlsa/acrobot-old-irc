@@ -130,17 +130,17 @@ exports.Acronym = Class.extend({
     return this.description;
   },
 
-  get_human_readable: function(description) {
+  get_human_readable: function() {
     var s = "";
     
-    s += this.get_acronym() + ": ";
+    //    s += this.get_acronym() + ", ";
     
     if(this.get_initials()) {
       s += this.get_initials();
     }
     
-    if(description && this.get_description()) {
-      if(this.get_initials()) s += ". ";
+    if(this.get_description()) {
+      if(this.get_initials()) s += ": ";
       s += this.get_description();
     }
 
