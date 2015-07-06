@@ -1224,6 +1224,16 @@
       "description": "An American venture capital firm, known for investing in Tesla Motors and SpaceX",
       "weight": 0.3,
       "source": "/r/spacex wiki"
+    },
+    {
+      "acronyms": [
+        "tla"
+      ],
+      "acronym": "TLA",
+      "initials": "Three Letter Acronym",
+      "description": "An funny meta-acronym, that is an acronym with three letters for Three Letter Acronym",
+      "weight": 0.9,
+      "source": "rndnum123"
     }
   ]
 }
