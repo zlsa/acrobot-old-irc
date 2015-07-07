@@ -1251,9 +1251,69 @@
       ],
       "acronym": "TLA",
       "initials": "Three Letter Acronym",
-      "description": "An funny meta-acronym, that is an acronym with three letters for Three Letter Acronym",
+      "description": "an acronym with three letters",
       "weight": 0.9,
       "source": "rndnum123"
+    },
+    {
+      "acronyms": [
+        "copv"
+      ],
+      "acronym": "COPV",
+      "initials": "Composite Overwrapped Pressure Vessel",
+      "description": "a pressure tank constructed from a thin, non-structural liner wrapped with structural fiber composite.",
+      "weight": 0.4,
+      "source": "wikipedia"
+    },
+    {
+      "acronyms": [
+        "f1f1"
+      ],
+      "acronym": "F1F1",
+      "initials": "Falcon 1 Flight 1",
+      "description": "the first flight of the SpaceX Falcon 1 launch vehicle; ended in failure when fuel leaking from a corroded bolt ignited",
+      "weight": 0.4,
+      "source": "wikipedia"
+    },
+    {
+      "acronyms": [
+        "f1f2"
+      ],
+      "acronym": "F1F2",
+      "initials": "Falcon 1 Flight 2",
+      "description": "the second flight of the SpaceX Falcon 1 launch vehicle; ended in failure due to second stage oscillation",
+      "weight": 0.4,
+      "source": "wikipedia"
+    },
+    {
+      "acronyms": [
+        "f1f3"
+      ],
+      "acronym": "F1F3",
+      "initials": "Falcon 1 Flight 3",
+      "description": "the third flight of the SpaceX Falcon 1 launch vehicle; ended in failure when the first stage recontacted the second stage after stage separation",
+      "weight": 0.4,
+      "source": "wikipedia"
+    },
+    {
+      "acronyms": [
+        "f1f4"
+      ],
+      "acronym": "F1F4",
+      "initials": "Falcon 1 Flight 4",
+      "description": "the fourth (and first successful) flight of the SpaceX Falcon 1 launch vehicle, carrying the Ratsat demo payload",
+      "weight": 0.4,
+      "source": "wikipedia"
+    },
+    {
+      "acronyms": [
+        "f1f5"
+      ],
+      "acronym": "F1F5",
+      "initials": "Falcon 1 Flight 5",
+      "description": "the fifth flight of the SpaceX Falcon 1 launch vehicle, carrying the RazakSAT payload",
+      "weight": 0.4,
+      "source": "wikipedia"
     }
   ]
 }

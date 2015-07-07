@@ -13,6 +13,10 @@
   "dependencies": {
     "irc":            "^0.3.12",
     "jsonfile":       "^2.2.1",
+    "levenshtein":    "^1.0.5",
+    "node-geocoder":  "^2.21.2",
+    "request":        "^2.58.0",
+    "moment":         "^2.10.3",
     "class.extend":   "^0.9.1"
   }
   

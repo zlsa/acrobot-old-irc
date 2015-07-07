@@ -6,6 +6,9 @@ var nlp      = require("./nlp");
 var acrs     = require("./acronyms");
 var util     = require("./util");
 var phrases  = require("./phrases");
+var geocoder = require("node-geocoder")("google", "http", null);
+var request  = require("request");
+var moment   = require("moment");
 
 exports.CONFIG_VERSION = 1;
 
@@ -152,6 +155,7 @@ exports.Server = Class.extend({
   },
 
   all: function(all, message) {
+    console.log(all, message);
     this.say(all, message);
   },
 
@@ -173,8 +177,13 @@ exports.Server = Class.extend({
     
   },
 
+  in_channel: function(channel) {
+    if(this.irc.channels.indexOf(channel) >= 0) return true;
+    return false;
+  },
+  
   join_channel: function(channel) {
-    if(this.irc.channels.indexOf(channel) >= 0) {
+    if(this.in_channel(channel)) {
       return false;
     }
     
@@ -188,7 +197,8 @@ exports.Server = Class.extend({
 
   part_channel: function(channel) {
     channel = channel.toLowerCase();
-    if(this.irc.channels.indexOf(channel) < 0) {
+    
+    if(!this.in_channel(channel)) {
       return false;
     }
 
@@ -317,11 +327,11 @@ exports.Server = Class.extend({
 
   // parsing
 
-  parse_what: function(cfn, all) {
+  parse_what: function(cfn, sender, all) {
 
     if(cfn.subjects.length <= 0) {
       this.mode_message("cheeky", "incomplete-short-sentence", all);
-      return false;
+      return true;
     }
 
     this.print_acronyms(cfn.subjects, all);
@@ -330,11 +340,115 @@ exports.Server = Class.extend({
     
   },
 
+  parse_when: function(cfn, sender, all) {
+    
+    if(!cfn.subject) return false;
+    
+    if(!cfn.location) {
+      this.all(all, "you need to specify where you are");
+      return;
+    }
+
+    var server = this;
+
+    geocoder.geocode(cfn.location, function(err, res) {
+      if(!res || res.length == 0) {
+        server.all(all, "i've got no idea where '" + cfn.location + "' is");
+        return true;
+      }
+      
+      var url = "http://api.open-notify.org/iss-pass.json?";
+      url +=  "lat=" + res[0].latitude;
+      url += "&lon=" + res[0].longitude;
+
+      var location = [];
+      if(res[0].city)    location.push(res[0].city);
+      if(res[0].state && res[0].state != res[0].city) location.push(res[0].state);
+      if(res[0].country) location.push(res[0].country);
+
+      location = location.join(", ");
+      
+      request(url, function (error, response, body) {
+        try {
+          
+          if(!error && response.statusCode == 200) {
+            var data   = JSON.parse(body);
+            var passes = data.response;
+
+            console.log(passes);
+
+            if(passes.length == 0) {
+              server.all(all, "looks like the ISS doesn't pass over " + city + " anytime soon");
+              return;
+            }
+
+            var s = "the ISS will pass over " + location + " ";
+            var p = [];
+            
+            for(var i=0; i<Math.min(3, passes.length); i++) {
+              var pass = passes[i];
+              var time_difference = moment.unix(pass.risetime).fromNow();
+              p.push(time_difference);
+            }
+
+            s += nlp.andify(p);
+            server.all(all, s);
+
+          }
+          
+        } catch(e) {
+          console.log(e);
+          server.direct(sender, all, "i've encountered an error while parsing the passes, sorry");
+        }
+      });
+      
+    });
+    
+    return true;
+
+  },
+
+  parse_where: function(cfn, sender, all) {
+
+    if(!cfn.subject) return false;
+    
+    var server = this;
+
+    var url = "http://api.open-notify.org/iss-now.json";
+
+    request(url, function(error, response, body) {
+      try {
+        
+        if(!error && response.statusCode == 200) {
+          var data   = JSON.parse(body);
+
+          var s = "the iss is at ";
+          s += data.iss_position.latitude.toFixed(4);
+          s += ", ";
+          s += data.iss_position.longitude.toFixed(4);
+          server.all(all, s);
+        }
+        
+      } catch(e) {
+        console.log(e);
+        server.direct(sender, all, "i've encountered an error while parsing the location, sorry");
+      }
+      
+    });
+
+    return true;
+
+  },
+
   parse_natural: function(sender, all, message) {
     var cfn = nlp.classify(this.irc.nick, message);
 
     if(cfn.action == "what") {
-      return this.parse_what(cfn, all);
+      return this.parse_what(cfn, sender, all);
+    } else if(cfn.action == "when") {
+      return this.parse_when(cfn, sender, all);
+    } else if(cfn.action == "where") {
+      return this.parse_where(cfn, sender, all);
     }
 
     return false;
@@ -880,8 +994,9 @@ exports.Server = Class.extend({
     if(to == this.irc.nick) direct = true;
     
     if(message.indexOf(this.irc.nick) == 0) {
-      type = "command";
       var first_space = message.indexOf(" ");
+
+      type = "command";
       
       if(first_space <= 0) {
         message = "";
@@ -890,15 +1005,17 @@ exports.Server = Class.extend({
       }
     }
 
-    if(type == "natural") {
-      if(this.mode_is("silent") || !this.mode_is("natural"))
-        return;
-      this.parse_natural(sender, all, message);
+    console.log(type, direct, sender, all, message);
+
+    if(direct)
+      all = sender;
+    
+    if(type == "natural" && !this.mode_is("silent") && this.mode_is("natural")) {
+      if(this.parse_natural(sender, all, message) == true) return;
     }
 
     if(direct || type == "command") {
-      if(direct)
-        all = sender;
+      console.log("ready for direct from " + sender);
       this.parse_command(sender, all, message);
     }
 

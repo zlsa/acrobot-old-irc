@@ -4,7 +4,8 @@
     "nick": "acrobotic",
     "server": "irc.esper.net",
     "channels": [
-      "#acrobot"
+      "#acrobot",
+      "#devdan"
     ]
   },
   "users": {
@@ -24,6 +25,9 @@
       "admin": true
     },
     "kjasd": {
+      "admin": true
+    },
+    "Zucal": {
       "admin": true
     }
   },
